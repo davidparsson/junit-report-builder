@@ -1,7 +1,7 @@
 {
   "name": "junit-report-builder",
   "version": "0.0.1",
-  "description": "Aimed at making it easier to build JUnit XML report plugins for testing frameworks",
+  "description": "Aimed at making it easier to build JUnit XML reports in plugins for testing frameworks",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
