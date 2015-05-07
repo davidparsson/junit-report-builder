@@ -1,4 +1,4 @@
-Builder = require '../src/index'
+Builder = require '../src/builder'
 
 describe 'JUnit XML builder', ->
   builder = new Builder()

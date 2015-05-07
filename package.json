@@ -2,7 +2,7 @@
   "name": "junit-report-builder",
   "version": "0.0.1",
   "description": "Aimed at making it easier to build JUnit XML reports in plugins for testing frameworks",
-  "main": "src/index.js",
+  "main": "src/builder.js",
   "scripts": {
     "test": "grunt test"
   },
