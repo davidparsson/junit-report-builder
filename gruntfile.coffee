@@ -9,7 +9,7 @@ module.exports = (grunt) ->
         specs: ['spec/**']
     watch:
       javaScript:
-        files: ['index.js', 'spec/**/*.js']
+        files: ['src/**/*.js', 'spec/**/*.js']
         tasks: ['test']
         options:
           atBegin: true

@@ -1,11 +1,11 @@
-var js2xml = require('js2xmlparser');
+var XmlConverter = require('./xml_converter');
 
 function Builder() {
   this.data = {};
 }
 
 Builder.prototype.build = function () {
-  return js2xml('testsuite', this.data);
+  return new XmlConverter(this.data).toXml();
 };
 
 module.exports = Builder;
