@@ -14,6 +14,10 @@ module.exports = (grunt) ->
       coffeeScript:
         files: ['spec/**/*.coffee']
         tasks: ['test']
+      config:
+        files: ['gruntfile.coffee']
+        options:
+          reload: true
 
   grunt.registerTask 'default', ['test']
   grunt.registerTask 'test', ['jasmine_nodejs:test']
