@@ -4,7 +4,7 @@
   "description": "Aimed at making it easier to build JUnit XML reports in plugins for testing frameworks",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "grunt test"
   },
   "repository": {
     "type": "git",
