@@ -5,7 +5,7 @@ function XmlConverter(data) {
 }
 
 XmlConverter.prototype.toXml = function () {
-  return js2xml('testsuite', this.data);
+  return js2xml('testsuites', this.data);
 };
 
 module.exports = XmlConverter;
