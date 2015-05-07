@@ -17,5 +17,9 @@
     "builder"
   ],
   "author": "David Pärsson <david@parsson.se>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "jit-grunt": "^0.9.1"
+  }
 }
