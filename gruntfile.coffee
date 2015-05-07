@@ -11,6 +11,8 @@ module.exports = (grunt) ->
       javaScript:
         files: ['index.js', 'spec/**/*.js']
         tasks: ['test']
+        options:
+          atBegin: true
       coffeeScript:
         files: ['spec/**/*.coffee']
         tasks: ['test']
@@ -21,4 +23,4 @@ module.exports = (grunt) ->
 
   grunt.registerTask 'default', ['test']
   grunt.registerTask 'test', ['jasmine_nodejs:test']
-  grunt.registerTask 'tdd', ['test', 'watch']
+  grunt.registerTask 'tdd', ['watch']
