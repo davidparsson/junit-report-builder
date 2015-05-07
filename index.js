@@ -1,1 +1,9 @@
-throw new Error('Not yet implemented');
+function Builder() {
+
+}
+
+Builder.prototype.build = function () {
+  return null;
+};
+
+module.exports = Builder;
