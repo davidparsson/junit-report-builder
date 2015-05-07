@@ -17,3 +17,4 @@ module.exports = (grunt) ->
 
   grunt.registerTask 'default', ['test']
   grunt.registerTask 'test', ['jasmine_nodejs:test']
+  grunt.registerTask 'tdd', ['test', 'watch']
