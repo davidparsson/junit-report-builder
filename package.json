@@ -1,0 +1,21 @@
+{
+  "name": "junit-report-builder",
+  "version": "0.0.1",
+  "description": "Aimed at making it easier to build JUnit XML report plugins for testing frameworks",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/davidparsson/junit-report-builder.git"
+  },
+  "keywords": [
+    "junit",
+    "xunit",
+    "report",
+    "builder"
+  ],
+  "author": "David Pärsson <david@parsson.se>",
+  "license": "MIT"
+}
