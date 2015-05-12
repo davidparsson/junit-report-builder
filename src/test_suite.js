@@ -1,4 +1,4 @@
-var TestCase = require('./TestCase');
+var TestCase = require('./test_case');
 
 function TestSuite(name) {
   this._name = name;

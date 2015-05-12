@@ -3,6 +3,8 @@ var xmlBuilder = require('xmlbuilder');
 var path = require('path');
 var mkdirp = require('mkdirp');
 var fs = require('fs');
+var TestSuite = require('./test_suite');
+var TestCase = require('./test_case');
 
 function JUnitReportBuilder() {
   this._testSuitesAndCases = [];
