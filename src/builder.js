@@ -34,3 +34,5 @@ JUnitReportBuilder.prototype.testCase = function (className, name) {
   this._testSuitesAndCases.push(testCase);
   return testCase;
 };
+
+module.exports = JUnitReportBuilder;
