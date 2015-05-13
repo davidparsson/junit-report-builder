@@ -1,7 +1,13 @@
 Builder = require '../src/builder'
 
-describe 'JUnit XML builder', ->
-  builder = new Builder()
+
+describe 'Report builder', ->
+  builder = null
+
+
+  beforeEach ->
+    builder = new Builder()
+
 
   it 'should should produce an empty test suite when nothing reported', ->
     expect(builder.build()).toBe(
