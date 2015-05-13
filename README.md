@@ -55,5 +55,8 @@ MIT. See [LICENSE](https://github.com/davidparsson/junit-report-builder/blob/mas
 Changelog
 ---------
 
+### 0.0.2
+- Corrected example in readme
+
 ### 0.0.1
 - Initial release
