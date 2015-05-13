@@ -10,7 +10,7 @@ module.exports = (grunt) ->
     watch:
       javaScript:
         files: ['src/**/*.js', 'spec/**/*.js']
-        tasks: ['test']
+        tasks: ['jshint', 'test']
         options:
           atBegin: true
       coffeeScript:
@@ -20,7 +20,9 @@ module.exports = (grunt) ->
         files: ['gruntfile.coffee']
         options:
           reload: true
+    jshint:
+      javaScript: ['src/**/*.js', 'spec/**/*.js']
 
-  grunt.registerTask 'default', ['test']
+  grunt.registerTask 'default', ['jshint', 'test']
   grunt.registerTask 'test', ['jasmine_nodejs:test']
   grunt.registerTask 'tdd', ['watch']
