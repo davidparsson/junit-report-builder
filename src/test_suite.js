@@ -1,7 +1,7 @@
-var TestCase = require('./test_case');
 var _ = require('lodash');
 
-function TestSuite() {
+function TestSuite(factory) {
+  this._factory = factory;
   this._attributes = {};
   this._testCases = [];
   this._properties = [];
@@ -17,8 +17,8 @@ TestSuite.prototype.property = function (name, value) {
   return this;
 };
 
-TestSuite.prototype.testCase = function (className, name) {
-  var testCase = new TestCase(className, name);
+TestSuite.prototype.testCase = function () {
+  var testCase = this._factory.newTestCase();
   this._testCases.push(testCase);
   return testCase;
 };

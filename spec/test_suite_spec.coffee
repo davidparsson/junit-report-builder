@@ -6,13 +6,21 @@ describe 'Test Suite builder', ->
   parentElement = null
   testSuiteElement = null
   propertiesElement = null
+  testCase = null
 
 
   beforeEach ->
-    testSuite = new TestSuite
+    factory = jasmine.createSpyObj 'factory', ['newTestCase']
+    testCase = jasmine.createSpyObj 'testCase', ['build']
+
+    factory.newTestCase.and.callFake () ->
+      return testCase
+
     parentElement = jasmine.createSpyObj 'parentElement', ['ele']
     testSuiteElement = jasmine.createSpyObj 'testSuiteElement', ['ele']
     propertiesElement = jasmine.createSpyObj 'propertiesElement', ['ele']
+
+    testSuite = new TestSuite factory
 
     parentElement.ele.and.callFake (elementName) ->
       switch elementName
@@ -64,3 +72,34 @@ describe 'Test Suite builder', ->
       name: 'name 2',
       value: 'value 2'
     })
+
+
+  it 'should pass testsuite element to the test case when building', ->
+    testSuite.testCase()
+
+    testSuite.build parentElement
+
+    expect(testCase.build).toHaveBeenCalledWith(testSuiteElement)
+
+
+  it 'should pass testsuite element to all created test cases when building', ->
+    testSuite.testCase()
+    testSuite.testCase()
+
+    testSuite.build parentElement
+
+    expect(testCase.build.calls.count()).toEqual(2)
+    expect(testCase.build.calls.argsFor(0)).toEqual([testSuiteElement])
+    expect(testCase.build.calls.argsFor(1)).toEqual([testSuiteElement])
+
+
+  it 'should return the newly created test case', ->
+    expect(testSuite.testCase()).toEqual(testCase)
+
+
+  it 'should return itself when configuring property', ->
+    expect(testSuite.property('name', 'value')).toEqual(testSuite)
+
+
+  it 'should return itself when configuring name', ->
+    expect(testSuite.name('name')).toEqual(testSuite)

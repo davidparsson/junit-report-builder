@@ -6,7 +6,8 @@ var fs = require('fs');
 var TestSuite = require('./test_suite');
 var TestCase = require('./test_case');
 
-function JUnitReportBuilder() {
+function JUnitReportBuilder(factory) {
+  this._factory = factory;
   this._testSuitesAndCases = [];
 }
 
@@ -23,14 +24,14 @@ JUnitReportBuilder.prototype.build = function () {
   return xmlTree.end({ pretty: true });
 };
 
-JUnitReportBuilder.prototype.testSuite = function (name) {
-  var suite = new TestSuite(name);
+JUnitReportBuilder.prototype.testSuite = function () {
+  var suite = this._factory.newTestSuite();
   this._testSuitesAndCases.push(suite);
   return suite;
 };
 
-JUnitReportBuilder.prototype.testCase = function (className, name) {
-  var testCase = new TestCase(className, name);
+JUnitReportBuilder.prototype.testCase = function () {
+  var testCase = this._factory.newTestCase();
   this._testSuitesAndCases.push(testCase);
   return testCase;
 };
