@@ -3,6 +3,13 @@ junit-report-builder
 
 A project aimed at making it easier to build Jenkins compatible XML based JUnit report files.
 
+Installation
+------------
+
+To install the latest version, run:
+
+    npm install junit-report-builder --save
+
 Usage
 -----
 
