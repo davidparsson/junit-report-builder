@@ -48,3 +48,14 @@ This will create `test-report.xml` containing the following:
   </testsuite>
 </testsuites>
 ```
+
+License
+-------
+
+MIT. See [LICENSE](https://github.com/davidparsson/junit-report-builder/blob/master/LICENSE).
+
+Changelog
+---------
+
+### 0.0.1
+- Initial release
