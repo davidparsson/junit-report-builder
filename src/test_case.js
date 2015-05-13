@@ -30,6 +30,7 @@ TestCase.prototype.failure = function (message) {
 };
 
 TestCase.prototype.stacktrace = function (stacktrace) {
+  this._failure = true;
   this._stacktrace = stacktrace;
   return this;
 };
@@ -46,7 +47,8 @@ TestCase.prototype.build = function (parentElement) {
     if (this._stacktrace) {
       failureElement.cdata(this._stacktrace);
     }
-  } else if (this._skipped) {
+  }
+  if (this._skipped) {
     testCaseElement.ele('skipped');
   }
 };
