@@ -1,7 +1,7 @@
 var Factory = require('./factory');
 
-function wireBuilder() {
+function createBuilder() {
   return new Factory().newBuilder();
 }
 
-module.exports = wireBuilder;
+module.exports.createBuilder = createBuilder;
