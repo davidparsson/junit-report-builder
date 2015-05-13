@@ -17,7 +17,7 @@ JUnitReportBuilder.prototype.writeTo = function (reportPath) {
 };
 
 JUnitReportBuilder.prototype.build = function () {
-  var xmlTree = xmlBuilder.create('testsuites');
+  var xmlTree = xmlBuilder.create('testsuites', { encoding: 'UTF-8' });
   _.forEach(this._testSuitesAndCases, function (suiteOrCase) {
     suiteOrCase.build(xmlTree);
   });

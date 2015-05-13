@@ -12,7 +12,7 @@ describe 'JUnit Report builder', ->
 
   it 'should should produce an empty list of test suites when nothing reported', ->
     expect(builder.build()).toBe(
-      '<?xml version="1.0"?>\n' +
+      '<?xml version="1.0" encoding="UTF-8"?>\n' +
       '<testsuites/>')
 
 
@@ -20,7 +20,7 @@ describe 'JUnit Report builder', ->
     builder.testSuite()
 
     expect(builder.build()).toBe(
-      '<?xml version="1.0"?>\n' +
+      '<?xml version="1.0" encoding="UTF-8"?>\n' +
       '<testsuites>\n' +
       '  <testsuite/>\n' +
       '</testsuites>')
@@ -30,7 +30,7 @@ describe 'JUnit Report builder', ->
     builder.testCase()
 
     expect(builder.build()).toBe(
-      '<?xml version="1.0"?>\n' +
+      '<?xml version="1.0" encoding="UTF-8"?>\n' +
       '<testsuites>\n' +
       '  <testcase/>\n' +
       '</testsuites>')
@@ -40,7 +40,7 @@ describe 'JUnit Report builder', ->
     builder.testSuite().testCase()
 
     expect(builder.build()).toBe(
-      '<?xml version="1.0"?>\n' +
+      '<?xml version="1.0" encoding="UTF-8"?>\n' +
       '<testsuites>\n' +
       '  <testsuite>\n' +
       '    <testcase/>\n' +
@@ -54,7 +54,7 @@ describe 'JUnit Report builder', ->
     builder.testCase().name(3)
 
     expect(builder.build()).toBe(
-      '<?xml version="1.0"?>\n' +
+      '<?xml version="1.0" encoding="UTF-8"?>\n' +
       '<testsuites>\n' +
       '  <testcase name="1"/>\n' +
       '  <testsuite name="2"/>\n' +
