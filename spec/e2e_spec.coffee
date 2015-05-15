@@ -1,4 +1,4 @@
-Factory = require '../src/factory'
+factory = require('../' + require('../package').main.replace('.js', ''))
 rmdir = require 'rimraf'
 fs = require 'fs'
 
@@ -7,7 +7,7 @@ describe 'JUnit Report builder', ->
 
 
   beforeEach ->
-    builder = new Factory().newBuilder()
+    builder = factory.createBuilder()
 
   beforeAll (done) ->
     rmdir 'build/tmp/test_resources', (error) ->
