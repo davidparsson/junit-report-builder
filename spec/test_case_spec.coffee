@@ -88,6 +88,18 @@ describe 'Test Case builder', ->
     expect(failureElement.cdata).toHaveBeenCalledWith('This is a stacktrace')
 
 
+  it 'should add a failure node with message and stacktrace when both provided', ->
+    testCase.failure 'Failure message'
+    testCase.stacktrace 'This is a stacktrace'
+
+    testCase.build parentElement
+
+    expect(testCaseElement.ele).toHaveBeenCalledWith('failure', {
+      message: 'Failure message'
+    })
+    expect(failureElement.cdata).toHaveBeenCalledWith('This is a stacktrace')
+
+
   it 'should add a skipped node when test failed', ->
     testCase.skipped()
 
