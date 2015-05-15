@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testcase classname="root.test.Class1"/>
+  <testsuite name="first.Suite">
+    <testcase name="Second test"/>
+    <testcase classname="suite1.test.Class2" name="Third test"/>
+  </testsuite>
+  <testsuite name="second.Suite">
+    <testcase>
+      <failure message="Failure message"/>
+    </testcase>
+    <testcase>
+      <failure>
+        <![CDATA[Stacktrace]]>
+      </failure>
+    </testcase>
+    <testcase>
+      <skipped/>
+    </testcase>
+  </testsuite>
+</testsuites>
