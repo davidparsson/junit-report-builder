@@ -54,7 +54,7 @@ This will create `test-report.xml` containing the following:
 License
 -------
 
-[MIT](https://github.com/davidparsson/junit-report-builder/blob/master/LICENSE)
+[MIT](LICENSE)
 
 Changelog
 ---------
