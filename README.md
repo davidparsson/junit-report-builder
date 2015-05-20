@@ -18,7 +18,7 @@ Usage
 -----
 
 ```JavaScript
-var builder = require('junit-report-builder').createBuilder();
+var builder = require('junit-report-builder');
 
 // Create a test suite
 var suite = builder.testSuite().name('My suite');
@@ -50,6 +50,9 @@ This will create `test-report.xml` containing the following:
   </testsuite>
 </testsuites>
 ```
+
+If you want to more than one report, just create new builder
+instances by calling `builder.newBuilder()`.
 
 License
 -------

@@ -36,4 +36,8 @@ JUnitReportBuilder.prototype.testCase = function () {
   return testCase;
 };
 
+JUnitReportBuilder.prototype.newBuilder = function () {
+  return this._factory.newBuilder();
+};
+
 module.exports = JUnitReportBuilder;
