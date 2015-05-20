@@ -62,6 +62,9 @@ License
 Changelog
 ---------
 
+### 1.0.0
+- Simplified API by making the index module export a builder instance
+
 ### 0.0.2
 - Corrected example in readme
 
