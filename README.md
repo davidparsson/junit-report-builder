@@ -57,7 +57,7 @@ builder instance like this:
 builder = builder.newBuilder();
 ```
 
-For more details, see the [API](API.md).
+For more details, see the [API documentation](API.md).
 
 License
 -------
