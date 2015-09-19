@@ -52,7 +52,10 @@ This will create `test-report.xml` containing the following:
 ```
 
 If you want to create another report file, start by getting a new
-builder instance like this: `builder = builder.newBuilder()`.
+builder instance like this:
+```JavaScript
+builder = builder.newBuilder();
+```
 
 License
 -------
