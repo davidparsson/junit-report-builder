@@ -17,12 +17,7 @@
     "builder"
   ],
   "author": "David Pärsson <david@parsson.se>",
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://github.com/davidparsson/junit-report-builder/blob/master/LICENSE"
-    }
-  ],
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/davidparsson/junit-report-builder/issues"
   },
