@@ -1,5 +1,6 @@
 module.exports = (grunt) ->
-  require('jit-grunt')(grunt)
+  require('jit-grunt') grunt,
+    jsdoc2md: 'grunt-jsdoc-to-markdown'
 
   require('time-grunt')(grunt) if grunt.option 'time'
 
@@ -24,6 +25,10 @@ module.exports = (grunt) ->
           reload: true
     jshint:
       javaScript: ['src/**/*.js', 'spec/**/*.js']
+    jsdoc2md:
+      api:
+        src: ['src/*.js']
+        dest: 'API.md'
 
   grunt.registerTask 'default', ['jshint', 'test']
   grunt.registerTask 'test', ['jasmine_nodejs:test']
