@@ -51,8 +51,8 @@ This will create `test-report.xml` containing the following:
 </testsuites>
 ```
 
-If you want to more than one report, just create new builder
-instances by calling `builder.newBuilder()`.
+If you want to reset the builder to create another report file,
+just get a new builder instance by calling `builder = builder.newBuilder()`.
 
 License
 -------
