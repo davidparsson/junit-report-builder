@@ -30,6 +30,7 @@ module.exports = (grunt) ->
         src: ['src/*.js']
         dest: 'API.md'
 
-  grunt.registerTask 'default', ['jshint', 'test']
+  grunt.registerTask 'default', ['jshint', 'test', 'doc']
   grunt.registerTask 'test', ['jasmine_nodejs:test']
   grunt.registerTask 'tdd', ['watch']
+  grunt.registerTask 'doc', ['jsdoc2md']
