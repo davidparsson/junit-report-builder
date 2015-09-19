@@ -1,6 +1,8 @@
 module.exports = (grunt) ->
   require('jit-grunt')(grunt)
 
+  require('time-grunt')(grunt) if grunt.option 'time'
+
   grunt.initConfig
     jasmine_nodejs:
       options:
