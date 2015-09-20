@@ -1,9 +1,13 @@
 function TestCase() {
   this._failure = false;
+  this._error = false;
   this._skipped = false;
   this._stacktrace = undefined;
+  this._stdout = undefined;
+  this._stderr = undefined;
   this._attributes = {};
   this._failureAttributes = {};
+  this._errorAttributes = {};
 }
 
 TestCase.prototype.className = function (className) {
@@ -29,10 +33,32 @@ TestCase.prototype.failure = function (message) {
   return this;
 };
 
+TestCase.prototype.error = function (message) {
+  this._error = true;
+  if (message) {
+    this._errorAttributes.message = message;
+  }
+  return this;
+};
+
 TestCase.prototype.stacktrace = function (stacktrace) {
   this._failure = true;
   this._stacktrace = stacktrace;
   return this;
+};
+
+TestCase.prototype.appendStdout = function (stdout)
+{
+    if(!this._stdout) this._stdout = "";
+    this._stdout += stdout+'\n';
+
+};
+
+TestCase.prototype.appendStderr = function (stderr)
+{
+    if(!this._stderr) this._stderr = "";
+    this._stderr += stderr+'\n';
+
 };
 
 TestCase.prototype.skipped = function () {
@@ -48,9 +74,21 @@ TestCase.prototype.build = function (parentElement) {
       failureElement.cdata(this._stacktrace);
     }
   }
+  if (this._error) {
+    testCaseElement.ele('error', this._errorAttributes);
+  }
+  if (this._stderr) {
+    var stderrElement = testCaseElement.ele('system-err');
+    stderrElement.cdata(this._stderr);
+  }
+  if (this._stdout) {
+    var stdoutElement = testCaseElement.ele('system-out');
+    stdoutElement.cdata(this._stdout);
+  }
   if (this._skipped) {
     testCaseElement.ele('skipped');
   }
 };
 
 module.exports = TestCase;
+// vim:sw=2:sts=2:ts=2:et
