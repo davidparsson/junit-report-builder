@@ -24,6 +24,7 @@ TestSuite.prototype.testCase = function () {
 };
 
 TestSuite.prototype.build = function (parentElement) {
+  this._attributes.tests = this._testCases.length;
   var suiteElement = parentElement.ele('testsuite', this._attributes);
 
   if (this._properties.length) {
@@ -35,7 +36,6 @@ TestSuite.prototype.build = function (parentElement) {
       });
     });
   }
-
 
   _.forEach(this._testCases, function (testCase) {
     testCase.build(suiteElement);

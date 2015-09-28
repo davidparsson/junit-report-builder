@@ -34,7 +34,9 @@ describe 'Test Suite builder', ->
   it 'should create a testsuite element when building', ->
     testSuite.build parentElement
 
-    expect(parentElement.ele).toHaveBeenCalledWith('testsuite', {})
+    expect(parentElement.ele).toHaveBeenCalledWith('testsuite', {
+      tests: 0
+    })
 
 
   it 'should add the provided name as an attribute', ->
@@ -43,7 +45,18 @@ describe 'Test Suite builder', ->
     testSuite.build parentElement
 
     expect(parentElement.ele).toHaveBeenCalledWith('testsuite', {
-      name: 'suite name'
+      name: 'suite name',
+      tests: 0
+    })
+
+
+  it 'should count the number of testcase elements', ->
+    testSuite.testCase()
+
+    testSuite.build parentElement
+
+    expect(parentElement.ele).toHaveBeenCalledWith('testsuite', {
+      tests: 1
     })
 
 

@@ -48,7 +48,7 @@ describe 'JUnit Report builder', ->
     builder.testSuite()
 
     expect(builder.build()).toBe reportWith(
-      '  <testsuite/>')
+      '  <testsuite tests="0"/>')
 
 
   it 'should produce a root test case when reported', ->
@@ -80,7 +80,7 @@ describe 'JUnit Report builder', ->
     builder.testSuite().testCase()
 
     expect(builder.build()).toBe reportWith(
-      '  <testsuite>\n' +
+      '  <testsuite tests="1">\n' +
       '    <testcase/>\n' +
       '  </testsuite>')
 
@@ -92,5 +92,5 @@ describe 'JUnit Report builder', ->
 
     expect(builder.build()).toBe reportWith(
       '  <testcase name="1"/>\n' +
-      '  <testsuite name="2"/>\n' +
+      '  <testsuite name="2" tests="0"/>\n' +
       '  <testcase name="3"/>')
