@@ -58,6 +58,30 @@ describe 'JUnit Report builder', ->
       '</testsuites>')
 
 
+  it 'should produce a root test case with failure when reported', ->
+    builder.testCase().failure('it failed')
+
+    expect(builder.build()).toBe(
+      '<?xml version="1.0" encoding="UTF-8"?>\n' +
+      '<testsuites>\n' +
+      '  <testcase>\n' +
+      '    <failure message="it failed"/>\n' +
+      '  </testcase>\n' +
+      '</testsuites>')
+
+
+  it 'should produce a root test case with error when reported', ->
+    builder.testCase().error('it errored')
+
+    expect(builder.build()).toBe(
+      '<?xml version="1.0" encoding="UTF-8"?>\n' +
+      '<testsuites>\n' +
+      '  <testcase>\n' +
+      '    <error message="it errored"/>\n' +
+      '  </testcase>\n' +
+      '</testsuites>')
+
+
   it 'should produce a test suite with a test case when reported', ->
     builder.testSuite().testCase()
 

@@ -116,3 +116,21 @@ describe 'Test Case builder', ->
 
     expect(testCaseElement.ele).toHaveBeenCalledWith('failure', {})
     expect(testCaseElement.ele).toHaveBeenCalledWith('skipped')
+
+
+  it 'should add an error node when test errored', ->
+    testCase.error()
+
+    testCase.build parentElement
+
+    expect(testCaseElement.ele).toHaveBeenCalledWith('error', {})
+
+
+  it 'should add a failure node with message when test failed', ->
+    testCase.error 'Error message'
+
+    testCase.build parentElement
+
+    expect(testCaseElement.ele).toHaveBeenCalledWith('error', {
+      message: 'Error message'
+    })

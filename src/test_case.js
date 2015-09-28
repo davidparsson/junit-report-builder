@@ -1,8 +1,10 @@
 function TestCase() {
+  this._error = false;
   this._failure = false;
   this._skipped = false;
   this._stacktrace = undefined;
   this._attributes = {};
+  this._errorAttributes = {};
   this._failureAttributes = {};
 }
 
@@ -29,6 +31,14 @@ TestCase.prototype.failure = function (message) {
   return this;
 };
 
+TestCase.prototype.error = function (message) {
+  this._error = true;
+  if (message) {
+    this._errorAttributes.message = message;
+  }
+  return this;
+};
+
 TestCase.prototype.stacktrace = function (stacktrace) {
   this._failure = true;
   this._stacktrace = stacktrace;
@@ -47,6 +57,9 @@ TestCase.prototype.build = function (parentElement) {
     if (this._stacktrace) {
       failureElement.cdata(this._stacktrace);
     }
+  }
+  if (this._error) {
+    var errorElement = testCaseElement.ele('error', this._errorAttributes);
   }
   if (this._skipped) {
     testCaseElement.ele('skipped');
