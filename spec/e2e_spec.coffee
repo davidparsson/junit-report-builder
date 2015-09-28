@@ -13,6 +13,12 @@ describe 'JUnit Report builder', ->
         throw new Error(error)
       done()
 
+  reportWith = (content) ->
+    '<?xml version="1.0" encoding="UTF-8"?>\n' +
+    '<testsuites>\n' +
+      content + '\n' +
+    '</testsuites>'
+
   it 'should produce a report identical to the expected one', ->
     builder.testCase().className("root.test.Class1")
     suite1 = builder.testSuite().name("first.Suite")
@@ -41,57 +47,42 @@ describe 'JUnit Report builder', ->
   it 'should produce an empty test suite when a test suite reported', ->
     builder.testSuite()
 
-    expect(builder.build()).toBe(
-      '<?xml version="1.0" encoding="UTF-8"?>\n' +
-      '<testsuites>\n' +
-      '  <testsuite/>\n' +
-      '</testsuites>')
+    expect(builder.build()).toBe reportWith(
+      '  <testsuite/>')
 
 
   it 'should produce a root test case when reported', ->
     builder.testCase()
 
-    expect(builder.build()).toBe(
-      '<?xml version="1.0" encoding="UTF-8"?>\n' +
-      '<testsuites>\n' +
-      '  <testcase/>\n' +
-      '</testsuites>')
+    expect(builder.build()).toBe reportWith(
+      '  <testcase/>')
 
 
   it 'should produce a root test case with failure when reported', ->
     builder.testCase().failure('it failed')
 
-    expect(builder.build()).toBe(
-      '<?xml version="1.0" encoding="UTF-8"?>\n' +
-      '<testsuites>\n' +
+    expect(builder.build()).toBe reportWith(
       '  <testcase>\n' +
       '    <failure message="it failed"/>\n' +
-      '  </testcase>\n' +
-      '</testsuites>')
+      '  </testcase>')
 
 
   it 'should produce a root test case with error when reported', ->
     builder.testCase().error('it errored')
 
-    expect(builder.build()).toBe(
-      '<?xml version="1.0" encoding="UTF-8"?>\n' +
-      '<testsuites>\n' +
+    expect(builder.build()).toBe reportWith(
       '  <testcase>\n' +
       '    <error message="it errored"/>\n' +
-      '  </testcase>\n' +
-      '</testsuites>')
+      '  </testcase>')
 
 
   it 'should produce a test suite with a test case when reported', ->
     builder.testSuite().testCase()
 
-    expect(builder.build()).toBe(
-      '<?xml version="1.0" encoding="UTF-8"?>\n' +
-      '<testsuites>\n' +
+    expect(builder.build()).toBe reportWith(
       '  <testsuite>\n' +
       '    <testcase/>\n' +
-      '  </testsuite>\n' +
-      '</testsuites>')
+      '  </testsuite>')
 
 
   it 'should output test suites and test cases in the order reported', ->
@@ -99,10 +90,7 @@ describe 'JUnit Report builder', ->
     builder.testSuite().name(2)
     builder.testCase().name(3)
 
-    expect(builder.build()).toBe(
-      '<?xml version="1.0" encoding="UTF-8"?>\n' +
-      '<testsuites>\n' +
+    expect(builder.build()).toBe reportWith(
       '  <testcase name="1"/>\n' +
       '  <testsuite name="2"/>\n' +
-      '  <testcase name="3"/>\n' +
-      '</testsuites>')
+      '  <testcase name="3"/>')
