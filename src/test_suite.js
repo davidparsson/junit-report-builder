@@ -1,4 +1,5 @@
 var _ = require('lodash');
+var dateformat = require('dateformat');
 
 function TestSuite(factory) {
   this._factory = factory;
@@ -13,7 +14,7 @@ TestSuite.prototype.name = function (name) {
 };
 
 TestSuite.prototype.timestamp = function (timestamp) {
-  if(_.isDate(timestamp)) timestamp = timestamp.toISOString();
+  if(_.isDate(timestamp)) timestamp = dateformat(timestamp, "yyyy-mm-dd'T'HH:MM:ss");
   this._attributes.timestamp = timestamp;
   return this;
 };
