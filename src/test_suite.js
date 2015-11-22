@@ -1,4 +1,5 @@
 var _ = require('lodash');
+var formatDate = require('date-format').asString;
 
 function TestSuite(factory) {
   this._factory = factory;
@@ -14,6 +15,15 @@ TestSuite.prototype.name = function (name) {
 
 TestSuite.prototype.time = function (timeInSeconds) {
   this._attributes.time = timeInSeconds;
+  return this;
+};
+
+TestSuite.prototype.timestamp = function (timestamp) {
+  if (_.isDate(timestamp)) {
+    this._attributes.timestamp = formatDate('yyyy-MM-ddThh:mm:ss', timestamp);
+  } else {
+    this._attributes.timestamp = timestamp;
+  }
   return this;
 };
 

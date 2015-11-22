@@ -119,14 +119,21 @@ describe 'JUnit Report builder', ->
 
 
   it 'should add the reported time to the test sute', ->
-    builder.testSuite().time(2.5)
+    builder.testSuite().time 2.5
 
     expect(builder.build()).toBe reportWith(
       '  <testsuite time="2.5" tests="0" failures="0" errors="0" skipped="0"/>')
 
 
+  it 'should add the reported timestamp to the test sute', ->
+    builder.testSuite().timestamp new Date(2015, 10, 22, 13, 37, 59, 123)
+
+    expect(builder.build()).toBe reportWith(
+      '  <testsuite timestamp="2015-11-22T13:37:59" tests="0" failures="0" errors="0" skipped="0"/>')
+
+
   it 'should add the reported time to the test case', ->
-    builder.testSuite().testCase().time(2.5)
+    builder.testSuite().testCase().time 2.5
 
     expect(builder.build()).toBe reportWith(
       '  <testsuite tests="1" failures="0" errors="0" skipped="0">\n' +

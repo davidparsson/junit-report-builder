@@ -78,6 +78,26 @@ describe 'Test Suite builder', ->
     }))
 
 
+  it 'should add the provided timestamp as an attribute', ->
+    testSuite.timestamp '2014-10-21T12:36:58'
+
+    testSuite.build parentElement
+
+    expect(parentElement.ele).toHaveBeenCalledWith('testsuite', jasmine.objectContaining({
+      timestamp: '2014-10-21T12:36:58'
+    }))
+
+
+  it 'should format the provided timestamp date and add it as an attribute', ->
+    testSuite.timestamp new Date(2015, 10, 22, 13, 37, 59, 123)
+
+    testSuite.build parentElement
+
+    expect(parentElement.ele).toHaveBeenCalledWith('testsuite', jasmine.objectContaining({
+      timestamp: '2015-11-22T13:37:59'
+    }))
+
+
   it 'should add the provided property as elements', ->
     testSuite.property 'property name', 'property value'
 
