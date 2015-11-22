@@ -54,6 +54,10 @@ TestCase.prototype.getFailureCount = function () {
   return Number(this._failure);
 };
 
+TestCase.prototype.getErrorCount = function () {
+  return Number(this._error);
+};
+
 TestCase.prototype.build = function (parentElement) {
   var testCaseElement = parentElement.ele('testcase', this._attributes);
   if (this._failure) {

@@ -150,3 +150,20 @@ describe 'Test Case builder', ->
 
     expect(testCase.getFailureCount()).toBe(1)
 
+
+  it 'should should have 0 errors when error not called', ->
+    expect(testCase.getErrorCount()).toBe(0)
+
+
+  it 'should should have 1 error when error called', ->
+    testCase.error()
+
+    expect(testCase.getErrorCount()).toBe(1)
+
+
+  it 'should should have 1 error when error called many times', ->
+    testCase.error()
+    testCase.error()
+
+    expect(testCase.getErrorCount()).toBe(1)
+

@@ -48,7 +48,7 @@ describe 'JUnit Report builder', ->
     builder.testSuite()
 
     expect(builder.build()).toBe reportWith(
-      '  <testsuite tests="0" failures="0"/>')
+      '  <testsuite tests="0" failures="0" errors="0"/>')
 
 
   it 'should produce a root test case when reported', ->
@@ -80,7 +80,7 @@ describe 'JUnit Report builder', ->
     builder.testSuite().testCase()
 
     expect(builder.build()).toBe reportWith(
-      '  <testsuite tests="1" failures="0">\n' +
+      '  <testsuite tests="1" failures="0" errors="0">\n' +
       '    <testcase/>\n' +
       '  </testsuite>')
 
@@ -89,9 +89,20 @@ describe 'JUnit Report builder', ->
     builder.testSuite().testCase().failure()
 
     expect(builder.build()).toBe reportWith(
-      '  <testsuite tests="1" failures="1">\n' +
+      '  <testsuite tests="1" failures="1" errors="0">\n' +
       '    <testcase>\n' +
       '      <failure/>\n' +
+      '    </testcase>\n' +
+      '  </testsuite>')
+
+
+  it 'should produce a test suite with an errored test case when reported', ->
+    builder.testSuite().testCase().error()
+
+    expect(builder.build()).toBe reportWith(
+      '  <testsuite tests="1" failures="0" errors="1">\n' +
+      '    <testcase>\n' +
+      '      <error/>\n' +
       '    </testcase>\n' +
       '  </testsuite>')
 
@@ -103,5 +114,5 @@ describe 'JUnit Report builder', ->
 
     expect(builder.build()).toBe reportWith(
       '  <testcase name="1"/>\n' +
-      '  <testsuite name="2" tests="0" failures="0"/>\n' +
+      '  <testsuite name="2" tests="0" failures="0" errors="0"/>\n' +
       '  <testcase name="3"/>')

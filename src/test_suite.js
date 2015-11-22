@@ -31,9 +31,18 @@ TestSuite.prototype.getFailureCount = function () {
   return failures;
 };
 
+TestSuite.prototype.getErrorCount = function () {
+  var errors = 0;
+  _.forEach(this._testCases, function (testCase) {
+    errors += testCase.getErrorCount();
+  });
+  return errors;
+};
+
 TestSuite.prototype.build = function (parentElement) {
   this._attributes.tests = this._testCases.length;
   this._attributes.failures = this.getFailureCount();
+  this._attributes.errors = this.getErrorCount();
   var suiteElement = parentElement.ele('testsuite', this._attributes);
 
   if (this._properties.length) {
