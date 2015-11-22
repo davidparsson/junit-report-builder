@@ -68,6 +68,16 @@ describe 'Test Suite builder', ->
     }))
 
 
+  it 'should add the provided time as an attribute', ->
+    testSuite.time 12.3
+
+    testSuite.build parentElement
+
+    expect(parentElement.ele).toHaveBeenCalledWith('testsuite', jasmine.objectContaining({
+      time: 12.3
+    }))
+
+
   it 'should add the provided property as elements', ->
     testSuite.property 'property name', 'property value'
 

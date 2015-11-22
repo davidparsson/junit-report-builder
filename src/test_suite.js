@@ -12,6 +12,11 @@ TestSuite.prototype.name = function (name) {
   return this;
 };
 
+TestSuite.prototype.time = function (timeInSeconds) {
+  this._attributes.time = timeInSeconds;
+  return this;
+};
+
 TestSuite.prototype.property = function (name, value) {
   this._properties.push({'name': name, 'value': value});
   return this;

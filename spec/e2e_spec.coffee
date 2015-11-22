@@ -118,6 +118,13 @@ describe 'JUnit Report builder', ->
       '  </testsuite>')
 
 
+  it 'should add the reported time to the test sute', ->
+    builder.testSuite().time(2.5)
+
+    expect(builder.build()).toBe reportWith(
+      '  <testsuite time="2.5" tests="0" failures="0" errors="0" skipped="0"/>')
+
+
   it 'should add the reported time to the test case', ->
     builder.testSuite().testCase().time(2.5)
 
