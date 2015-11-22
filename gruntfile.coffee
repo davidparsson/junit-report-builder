@@ -22,6 +22,9 @@ module.exports = (grunt) ->
         files: ['gruntfile.coffee']
         options:
           reload: true
+      testResources:
+        files: ['spec/**/*.xml']
+        tasks: ['test']
     jshint:
       javaScript: ['src/**/*.js', 'spec/**/*.js']
 
