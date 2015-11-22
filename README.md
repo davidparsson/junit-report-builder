@@ -65,6 +65,9 @@ License
 Changelog
 ---------
 
+### 1.1.0
+- Adding attributes for test count, failure count, error count and skipped test count to testsuite elements
+
 ### 1.0.0
 - Simplified API by making the index module export a builder instance
 
