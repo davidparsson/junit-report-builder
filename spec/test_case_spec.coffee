@@ -110,12 +110,10 @@ describe 'Test Case builder', ->
 
   it 'should add a failure node when test failed', ->
     testCase.failure()
-    testCase.skipped()
 
     testCase.build parentElement
 
     expect(testCaseElement.ele).toHaveBeenCalledWith('failure', {})
-    expect(testCaseElement.ele).toHaveBeenCalledWith('skipped')
 
 
   it 'should add an error node when test errored', ->
