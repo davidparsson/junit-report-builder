@@ -107,7 +107,7 @@ describe 'JUnit Report builder', ->
       '  </testsuite>')
 
 
-  it 'should produce a test suite with an skipped test case when reported', ->
+  it 'should produce a test suite with a skipped test case when reported', ->
     builder.testSuite().testCase().skipped()
 
     expect(builder.build()).toBe reportWith(
