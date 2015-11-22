@@ -11,7 +11,7 @@ describe 'Test Suite builder', ->
 
   beforeEach ->
     factory = jasmine.createSpyObj 'factory', ['newTestCase']
-    testCase = jasmine.createSpyObj 'testCase', ['build']
+    testCase = jasmine.createSpyObj 'testCase', ['build', 'getFailureCount']
 
     factory.newTestCase.and.callFake () ->
       return testCase
@@ -30,13 +30,16 @@ describe 'Test Suite builder', ->
       switch elementName
         when 'properties' then return propertiesElement
 
+    testCase.getFailureCount.and.callFake () ->
+      return 0
+
 
   it 'should create a testsuite element when building', ->
     testSuite.build parentElement
 
-    expect(parentElement.ele).toHaveBeenCalledWith('testsuite', {
+    expect(parentElement.ele).toHaveBeenCalledWith('testsuite', jasmine.objectContaining({
       tests: 0
-    })
+    }))
 
 
   it 'should add the provided name as an attribute', ->
@@ -44,10 +47,9 @@ describe 'Test Suite builder', ->
 
     testSuite.build parentElement
 
-    expect(parentElement.ele).toHaveBeenCalledWith('testsuite', {
-      name: 'suite name',
-      tests: 0
-    })
+    expect(parentElement.ele).toHaveBeenCalledWith('testsuite', jasmine.objectContaining({
+      name: 'suite name'
+    }))
 
 
   it 'should count the number of testcase elements', ->
@@ -55,9 +57,9 @@ describe 'Test Suite builder', ->
 
     testSuite.build parentElement
 
-    expect(parentElement.ele).toHaveBeenCalledWith('testsuite', {
+    expect(parentElement.ele).toHaveBeenCalledWith('testsuite', jasmine.objectContaining({
       tests: 1
-    })
+    }))
 
 
   it 'should add the provided property as elements', ->
@@ -116,3 +118,36 @@ describe 'Test Suite builder', ->
 
   it 'should return itself when configuring name', ->
     expect(testSuite.name('name')).toEqual(testSuite)
+
+
+  it 'should not report any failures when no test cases', ->
+    testSuite.build parentElement
+
+    expect(parentElement.ele).toHaveBeenCalledWith('testsuite', jasmine.objectContaining({
+      failures: 0
+    }))
+
+
+  it 'should not report any failures when no test cases failed', ->
+    testSuite.testCase()
+    testSuite.testCase()
+
+    testSuite.build parentElement
+
+    expect(parentElement.ele).toHaveBeenCalledWith('testsuite', jasmine.objectContaining({
+      failures: 0
+    }))
+
+
+  it 'should report two failures when two test cases failed', ->
+    testCase.getFailureCount.and.callFake () ->
+      return 1
+
+    testSuite.testCase()
+    testSuite.testCase()
+
+    testSuite.build parentElement
+
+    expect(parentElement.ele).toHaveBeenCalledWith('testsuite', jasmine.objectContaining({
+      failures: 2
+    }))
