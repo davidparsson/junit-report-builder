@@ -50,6 +50,10 @@ TestCase.prototype.skipped = function () {
   return this;
 };
 
+TestCase.prototype.getFailureCount = function () {
+  return Number(this._failure);
+};
+
 TestCase.prototype.build = function (parentElement) {
   var testCaseElement = parentElement.ele('testcase', this._attributes);
   if (this._failure) {

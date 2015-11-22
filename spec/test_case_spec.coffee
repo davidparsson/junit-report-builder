@@ -132,3 +132,21 @@ describe 'Test Case builder', ->
     expect(testCaseElement.ele).toHaveBeenCalledWith('error', {
       message: 'Error message'
     })
+
+
+  it 'should should have 0 failures when not failed', ->
+    expect(testCase.getFailureCount()).toBe(0)
+
+
+  it 'should should have 1 failure when failed', ->
+    testCase.failure()
+
+    expect(testCase.getFailureCount()).toBe(1)
+
+
+  it 'should should have 1 failure when failed many times', ->
+    testCase.failure()
+    testCase.failure()
+
+    expect(testCase.getFailureCount()).toBe(1)
+
