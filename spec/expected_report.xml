@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
   <testcase classname="root.test.Class1"/>
-  <testsuite name="first.Suite" tests="2" failures="0" errors="0">
+  <testsuite name="first.Suite" tests="2" failures="0" errors="0" skipped="0">
     <testcase name="Second test"/>
     <testcase classname="suite1.test.Class2" name="Third test"/>
   </testsuite>
-  <testsuite name="second.Suite" tests="3" failures="2" errors="0">
+  <testsuite name="second.Suite" tests="3" failures="2" errors="0" skipped="1">
     <testcase>
       <failure message="Failure message"/>
     </testcase>

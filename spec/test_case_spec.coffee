@@ -134,36 +134,56 @@ describe 'Test Case builder', ->
     })
 
 
-  it 'should should have 0 failures when not failed', ->
-    expect(testCase.getFailureCount()).toBe(0)
+  describe 'failure counting', ->
+    it 'should should have 0 failures when not failed', ->
+      expect(testCase.getFailureCount()).toBe(0)
 
 
-  it 'should should have 1 failure when failed', ->
-    testCase.failure()
+    it 'should should have 1 failure when failed', ->
+      testCase.failure()
 
-    expect(testCase.getFailureCount()).toBe(1)
-
-
-  it 'should should have 1 failure when failed many times', ->
-    testCase.failure()
-    testCase.failure()
-
-    expect(testCase.getFailureCount()).toBe(1)
+      expect(testCase.getFailureCount()).toBe(1)
 
 
-  it 'should should have 0 errors when error not called', ->
-    expect(testCase.getErrorCount()).toBe(0)
+    it 'should should have 1 failure when failed many times', ->
+      testCase.failure()
+      testCase.failure()
+
+      expect(testCase.getFailureCount()).toBe(1)
 
 
-  it 'should should have 1 error when error called', ->
-    testCase.error()
+  describe 'error counting', ->
+    it 'should should have 0 errors when error not called', ->
+      expect(testCase.getErrorCount()).toBe(0)
 
-    expect(testCase.getErrorCount()).toBe(1)
+
+    it 'should should have 1 error when error called', ->
+      testCase.error()
+
+      expect(testCase.getErrorCount()).toBe(1)
 
 
-  it 'should should have 1 error when error called many times', ->
-    testCase.error()
-    testCase.error()
+    it 'should should have 1 error when error called many times', ->
+      testCase.error()
+      testCase.error()
 
-    expect(testCase.getErrorCount()).toBe(1)
+      expect(testCase.getErrorCount()).toBe(1)
+
+
+  describe 'skipped counting', ->
+    it 'should be 0 when skipped not called', ->
+      expect(testCase.getSkippedCount()).toBe(0)
+
+
+    it 'should be 1 when skipped called', ->
+      testCase.skipped()
+
+      expect(testCase.getSkippedCount()).toBe(1)
+
+
+    it 'should be 1 when skipped called many times', ->
+      testCase.skipped()
+      testCase.skipped()
+
+      expect(testCase.getSkippedCount()).toBe(1)
 

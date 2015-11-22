@@ -11,7 +11,7 @@ describe 'Test Suite builder', ->
 
   beforeEach ->
     factory = jasmine.createSpyObj 'factory', ['newTestCase']
-    testCase = jasmine.createSpyObj 'testCase', ['build', 'getFailureCount', 'getErrorCount']
+    testCase = jasmine.createSpyObj 'testCase', ['build', 'getFailureCount', 'getErrorCount', 'getSkippedCount']
 
     factory.newTestCase.and.callFake () ->
       return testCase
@@ -34,6 +34,9 @@ describe 'Test Suite builder', ->
       return 0
 
     testCase.getErrorCount.and.callFake () ->
+      return 0
+
+    testCase.getSkippedCount.and.callFake () ->
       return 0
 
 
@@ -122,7 +125,7 @@ describe 'Test Suite builder', ->
   it 'should return itself when configuring name', ->
     expect(testSuite.name('name')).toEqual(testSuite)
 
-  describe 'failures', ->
+  describe 'failure count', ->
     it 'should not report any failures when no test cases', ->
       testSuite.build parentElement
 
@@ -156,7 +159,7 @@ describe 'Test Suite builder', ->
       }))
 
 
-  describe 'errors', ->
+  describe 'error count', ->
     it 'should not report any errors when no test cases', ->
       testSuite.build parentElement
 
@@ -187,4 +190,38 @@ describe 'Test Suite builder', ->
 
       expect(parentElement.ele).toHaveBeenCalledWith('testsuite', jasmine.objectContaining({
         errors: 2
+      }))
+
+
+  describe 'skipped count', ->
+    it 'should not report any skipped when no test cases', ->
+      testSuite.build parentElement
+
+      expect(parentElement.ele).toHaveBeenCalledWith('testsuite', jasmine.objectContaining({
+        skipped: 0
+      }))
+
+
+    it 'should not report any skipped when no test cases errored', ->
+      testSuite.testCase()
+      testSuite.testCase()
+
+      testSuite.build parentElement
+
+      expect(parentElement.ele).toHaveBeenCalledWith('testsuite', jasmine.objectContaining({
+        skipped: 0
+      }))
+
+
+    it 'should report two skipped when two test cases errored', ->
+      testCase.getSkippedCount.and.callFake () ->
+        return 1
+
+      testSuite.testCase()
+      testSuite.testCase()
+
+      testSuite.build parentElement
+
+      expect(parentElement.ele).toHaveBeenCalledWith('testsuite', jasmine.objectContaining({
+        skipped: 2
       }))
