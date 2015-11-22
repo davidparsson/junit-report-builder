@@ -118,17 +118,6 @@ describe 'JUnit Report builder', ->
       '  </testsuite>')
 
 
-  it 'should output test suites and test cases in the order reported', ->
-    builder.testCase().name(1)
-    builder.testSuite().name(2)
-    builder.testCase().name(3)
-
-    expect(builder.build()).toBe reportWith(
-      '  <testcase name="1"/>\n' +
-      '  <testsuite name="2" tests="0" failures="0" errors="0" skipped="0"/>\n' +
-      '  <testcase name="3"/>')
-
-
   it 'should print the reported standard output log to system-out', ->
     builder.testSuite().testCase().standardOutput("This was written to stdout!")
 
@@ -153,3 +142,14 @@ describe 'JUnit Report builder', ->
       '      </system-err>\n' +
       '    </testcase>\n' +
       '  </testsuite>')
+
+
+  it 'should output test suites and test cases in the order reported', ->
+    builder.testCase().name(1)
+    builder.testSuite().name(2)
+    builder.testCase().name(3)
+
+    expect(builder.build()).toBe reportWith(
+      '  <testcase name="1"/>\n' +
+      '  <testsuite name="2" tests="0" failures="0" errors="0" skipped="0"/>\n' +
+      '  <testcase name="3"/>')
