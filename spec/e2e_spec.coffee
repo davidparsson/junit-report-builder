@@ -32,8 +32,8 @@ describe 'JUnit Report builder', ->
     builder.writeTo('build/tmp/test_resources/actual_report.xml')
 
     actual = fs.readFileSync('build/tmp/test_resources/actual_report.xml')
-      .toString()
-    expected = fs.readFileSync('spec/expected_report.xml').toString()
+      .toString().trim()
+    expected = fs.readFileSync('spec/expected_report.xml').toString().trim()
 
     expect(actual).toBe(expected)
 
