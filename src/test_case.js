@@ -20,8 +20,8 @@ TestCase.prototype.name = function (name) {
   return this;
 };
 
-TestCase.prototype.time = function (time) {
-  this._attributes.time = time;
+TestCase.prototype.time = function (timeInSeconds) {
+  this._attributes.time = timeInSeconds;
   return this;
 };
 
