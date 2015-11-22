@@ -126,7 +126,7 @@ describe 'Test Case builder', ->
     expect(testCaseElement.ele).toHaveBeenCalledWith('error', {})
 
 
-  it 'should add a failure node with message when test failed', ->
+  it 'should add a error node with message when test errored', ->
     testCase.error 'Error message'
 
     testCase.build parentElement
