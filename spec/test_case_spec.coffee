@@ -7,14 +7,18 @@ describe 'Test Case builder', ->
   testCaseElement = null
   failureElement = null
   skippedElement = null
+  systemOutElement = null
 
+  createElementMock = (elementName) ->
+    jasmine.createSpyObj(elementName, ['ele', 'cdata', 'att'])
 
   beforeEach ->
     testCase = new TestCase()
-    parentElement = jasmine.createSpyObj('parentElement', ['ele'])
-    testCaseElement = jasmine.createSpyObj('testCaseElement', ['ele'])
-    failureElement = jasmine.createSpyObj('failureElement', ['ele', 'cdata'])
-    skippedElement = jasmine.createSpyObj('skippedElement', ['ele'])
+    parentElement = createElementMock('parentElement')
+    testCaseElement = createElementMock('testCaseElement')
+    failureElement = createElementMock('failureElement')
+    skippedElement = createElementMock('skippedElement')
+    systemOutElement = createElementMock('systemOutElement')
 
     parentElement.ele.and.callFake (elementName) ->
       switch elementName
@@ -24,6 +28,7 @@ describe 'Test Case builder', ->
       switch elementName
         when 'failure' then return failureElement
         when 'skipped' then return skippedElement
+        when 'system-out' then return systemOutElement
 
 
   it 'should build a testcase element without attributes by default', ->
@@ -134,6 +139,31 @@ describe 'Test Case builder', ->
     })
 
 
+  describe 'system-out', ->
+    it 'should not create a system-out tag when nothing logged', ->
+      testCase.build parentElement
+
+      expect(testCaseElement.ele).not.toHaveBeenCalledWith('system-out', jasmine.anything())
+
+
+    it 'should create a system-out tag with the log as a cdata tag', ->
+      testCase.standardOutput('Standard output')
+
+      testCase.build parentElement
+
+      expect(testCaseElement.ele).toHaveBeenCalledWith('system-out')
+      expect(systemOutElement.cdata).toHaveBeenCalledWith('Standard output')
+
+
+    it 'should only add the last logged content to system-out', ->
+      testCase.standardOutput('Standard output').standardOutput('Second stdout')
+
+      testCase.build parentElement
+
+      expect(systemOutElement.cdata).not.toHaveBeenCalledWith('Standard output')
+      expect(systemOutElement.cdata).toHaveBeenCalledWith('Second stdout')
+
+
   describe 'failure counting', ->
     it 'should should have 0 failures when not failed', ->
       expect(testCase.getFailureCount()).toBe(0)
@@ -186,4 +216,3 @@ describe 'Test Case builder', ->
       testCase.skipped()
 
       expect(testCase.getSkippedCount()).toBe(1)
-

@@ -2,6 +2,7 @@ function TestCase() {
   this._error = false;
   this._failure = false;
   this._skipped = false;
+  this._standardOutput = undefined;
   this._stacktrace = undefined;
   this._attributes = {};
   this._errorAttributes = {};
@@ -50,6 +51,11 @@ TestCase.prototype.skipped = function () {
   return this;
 };
 
+TestCase.prototype.standardOutput = function (log) {
+  this._standardOutput = log;
+  return this;
+};
+
 TestCase.prototype.getFailureCount = function () {
   return Number(this._failure);
 };
@@ -75,6 +81,9 @@ TestCase.prototype.build = function (parentElement) {
   }
   if (this._skipped) {
     testCaseElement.ele('skipped');
+  }
+  if (this._standardOutput) {
+    testCaseElement.ele('system-out').cdata(this._standardOutput);
   }
 };
 

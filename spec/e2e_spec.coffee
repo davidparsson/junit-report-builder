@@ -127,3 +127,16 @@ describe 'JUnit Report builder', ->
       '  <testcase name="1"/>\n' +
       '  <testsuite name="2" tests="0" failures="0" errors="0" skipped="0"/>\n' +
       '  <testcase name="3"/>')
+
+
+  it 'should print the reported standard output log to system-out', ->
+    builder.testSuite().testCase().standardOutput("This was written to stdout!")
+
+    expect(builder.build()).toBe reportWith(
+      '  <testsuite tests="1" failures="0" errors="0" skipped="0">\n' +
+      '    <testcase>\n' +
+      '      <system-out>\n' +
+      '        <![CDATA[This was written to stdout!]]>\n' +
+      '      </system-out>\n' +
+      '    </testcase>\n' +
+      '  </testsuite>')
