@@ -42,7 +42,7 @@ This will create `test-report.xml` containing the following:
 ```XML
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="My suite">
+  <testsuite name="My suite" tests="2" failures="1" errors="0" skipped="0">
     <testcase classname="my.test.Class" name="My first test"/>
     <testcase classname="my.test.Class" name="My second test">
       <failure/>
