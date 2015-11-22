@@ -140,3 +140,16 @@ describe 'JUnit Report builder', ->
       '      </system-out>\n' +
       '    </testcase>\n' +
       '  </testsuite>')
+
+
+  it 'should print the reported standard error log to system-err', ->
+    builder.testSuite().testCase().standardError("This was written to stderr!")
+
+    expect(builder.build()).toBe reportWith(
+      '  <testsuite tests="1" failures="0" errors="0" skipped="0">\n' +
+      '    <testcase>\n' +
+      '      <system-err>\n' +
+      '        <![CDATA[This was written to stderr!]]>\n' +
+      '      </system-err>\n' +
+      '    </testcase>\n' +
+      '  </testsuite>')

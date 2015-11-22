@@ -8,6 +8,7 @@ describe 'Test Case builder', ->
   failureElement = null
   skippedElement = null
   systemOutElement = null
+  systemErrElement = null
 
   createElementMock = (elementName) ->
     jasmine.createSpyObj(elementName, ['ele', 'cdata', 'att'])
@@ -19,6 +20,7 @@ describe 'Test Case builder', ->
     failureElement = createElementMock('failureElement')
     skippedElement = createElementMock('skippedElement')
     systemOutElement = createElementMock('systemOutElement')
+    systemErrElement = createElementMock('systemErrElement')
 
     parentElement.ele.and.callFake (elementName) ->
       switch elementName
@@ -29,6 +31,7 @@ describe 'Test Case builder', ->
         when 'failure' then return failureElement
         when 'skipped' then return skippedElement
         when 'system-out' then return systemOutElement
+        when 'system-err' then return systemErrElement
 
 
   it 'should build a testcase element without attributes by default', ->
@@ -162,6 +165,31 @@ describe 'Test Case builder', ->
 
       expect(systemOutElement.cdata).not.toHaveBeenCalledWith('Standard output')
       expect(systemOutElement.cdata).toHaveBeenCalledWith('Second stdout')
+
+
+  describe 'system-err', ->
+    it 'should not create a system-err tag when nothing logged', ->
+      testCase.build parentElement
+
+      expect(testCaseElement.ele).not.toHaveBeenCalledWith('system-err', jasmine.anything())
+
+
+    it 'should create a system-err tag with the log as a cdata tag', ->
+      testCase.standardError('Standard error')
+
+      testCase.build parentElement
+
+      expect(testCaseElement.ele).toHaveBeenCalledWith('system-err')
+      expect(systemErrElement.cdata).toHaveBeenCalledWith('Standard error')
+
+
+    it 'should only add the last logged content to system-err', ->
+      testCase.standardError('Standard error').standardError('Second stderr')
+
+      testCase.build parentElement
+
+      expect(systemErrElement.cdata).not.toHaveBeenCalledWith('Standard error')
+      expect(systemErrElement.cdata).toHaveBeenCalledWith('Second stderr')
 
 
   describe 'failure counting', ->
