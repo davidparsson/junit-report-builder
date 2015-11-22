@@ -118,6 +118,15 @@ describe 'JUnit Report builder', ->
       '  </testsuite>')
 
 
+  it 'should add the reported time to the test case', ->
+    builder.testSuite().testCase().time(2.5)
+
+    expect(builder.build()).toBe reportWith(
+      '  <testsuite tests="1" failures="0" errors="0" skipped="0">\n' +
+      '    <testcase time="2.5"/>\n' +
+      '  </testsuite>')
+
+
   it 'should print the reported standard output log to system-out', ->
     builder.testSuite().testCase().standardOutput("This was written to stdout!")
 
