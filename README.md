@@ -67,6 +67,9 @@ License
 Changelog
 ---------
 
+### 1.1.1
+- Changed `date-format` to be a dependency. Previously it was incorrectly set to be a devDependency.
+
 ### 1.1.0
 - Added attributes for test count, failure count, error count and skipped test count to testsuite elements
 - Added ability to attach standard output and standard error logs to test cases
