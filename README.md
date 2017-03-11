@@ -67,6 +67,9 @@ License
 Changelog
 ---------
 
+### 1.2.0
+- Support creating XML with emojis.
+
 ### 1.1.1
 - Changed `date-format` to be a dependency. Previously it was incorrectly set to be a devDependency.
 
