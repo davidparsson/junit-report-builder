@@ -176,3 +176,15 @@ describe 'JUnit Report builder', ->
       '  <testcase name="1"/>\n' +
       '  <testsuite name="2" tests="0" failures="0" errors="0" skipped="0"/>\n' +
       '  <testcase name="3"/>')
+
+
+  it 'should builder supports emojis in cdata tags', ->
+    emoji = String.fromCodePoint(0x1F926)
+    builder.testCase().standardOutput('Emoji: ' + emoji)
+
+    expect(builder.build()).toBe reportWith(
+      '  <testcase>\n' +
+      '    <system-out>\n' +
+      '      <![CDATA[Emoji: ' + emoji + ']]>\n' +
+      '    </system-out>\n' +
+      '  </testcase>')
