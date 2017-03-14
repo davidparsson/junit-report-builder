@@ -68,10 +68,10 @@ Changelog
 ---------
 
 ### 1.2.0
-- Support creating XML with emojis.
+- Support creating XML with emojis. Thanks to [ischwarz](https://github.com/ischwarz).
 
 ### 1.1.1
-- Changed `date-format` to be a dependency. Previously it was incorrectly set to be a devDependency.
+- Changed `date-format` to be a dependency. Previously it was incorrectly set to be a devDependency. Thanks to [georgecrawford](https://github.com/georgecrawford).
 
 ### 1.1.0
 - Added attributes for test count, failure count, error count and skipped test count to testsuite elements
