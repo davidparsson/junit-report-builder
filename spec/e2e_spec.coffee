@@ -179,12 +179,11 @@ describe 'JUnit Report builder', ->
 
 
   it 'should builder supports emojis in cdata tags', ->
-    emoji = String.fromCodePoint(0x1F926)
-    builder.testCase().standardOutput('Emoji: ' + emoji)
+    builder.testCase().standardOutput('Emoji: 🤦')
 
     expect(builder.build()).toBe reportWith(
       '  <testcase>\n' +
       '    <system-out>\n' +
-      '      <![CDATA[Emoji: ' + emoji + ']]>\n' +
+      '      <![CDATA[Emoji: 🤦]]>\n' +
       '    </system-out>\n' +
       '  </testcase>')
