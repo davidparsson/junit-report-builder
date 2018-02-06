@@ -166,6 +166,20 @@ describe 'JUnit Report builder', ->
       '    </testcase>\n' +
       '  </testsuite>')
 
+  it 'should print the reported attachment to system-err', ->
+    builder.testSuite().testCase()
+      .standardError("This was written to stderr!")
+      .errorAttachment("absolute/path/to/attachment")
+
+    expect(builder.build()).toBe reportWith(
+      '  <testsuite tests="1" failures="0" errors="0" skipped="0">\n' +
+      '    <testcase>\n' +
+      '      <system-err>\n' +
+      '        <![CDATA[This was written to stderr!]]>\n' +
+      '        [[ATTACHMENT|absolute/path/to/attachment]]\n' +
+      '      </system-err>\n' +
+      '    </testcase>\n' +
+      '  </testsuite>')
 
   it 'should output test suites and test cases in the order reported', ->
     builder.testCase().name(1)

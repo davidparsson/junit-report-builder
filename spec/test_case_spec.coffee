@@ -11,7 +11,7 @@ describe 'Test Case builder', ->
   systemErrElement = null
 
   createElementMock = (elementName) ->
-    jasmine.createSpyObj(elementName, ['ele', 'cdata', 'att'])
+    jasmine.createSpyObj(elementName, ['ele', 'cdata', 'att', 'txt'])
 
   beforeEach ->
     testCase = new TestCase()
@@ -33,6 +33,9 @@ describe 'Test Case builder', ->
         when 'system-out' then return systemOutElement
         when 'system-err' then return systemErrElement
 
+    systemErrElement.cdata.and.callFake (stdError) ->
+      switch stdError
+        when 'Error with screenshot' then return systemErrElement
 
   it 'should build a testcase element without attributes by default', ->
     testCase.build parentElement
@@ -190,6 +193,16 @@ describe 'Test Case builder', ->
 
       expect(systemErrElement.cdata).not.toHaveBeenCalledWith('Standard error')
       expect(systemErrElement.cdata).toHaveBeenCalledWith('Second stderr')
+
+    it 'should add an attachment to system-err', ->
+      testCase.standardError('Error with screenshot')
+      testCase.errorAttachment('absolute/path/to/attachment')
+
+      testCase.build parentElement
+
+      expect(testCaseElement.ele).toHaveBeenCalledWith('system-err')
+      expect(systemErrElement.cdata).toHaveBeenCalledWith('Error with screenshot')
+      expect(systemErrElement.txt).toHaveBeenCalledWith('[[ATTACHMENT|absolute/path/to/attachment]]')
 
 
   describe 'failure counting', ->
