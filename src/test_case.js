@@ -102,7 +102,7 @@ TestCase.prototype.build = function (parentElement) {
     systemError = testCaseElement.ele('system-err').cdata(this._standardError);
 
     if(this._errorAttachment) {
-      systemError.txt(`[[ATTACHMENT|${this._errorAttachment}]]`);
+      systemError.txt('[[ATTACHMENT|' + this._errorAttachment + ']]');
     }
   }
 };
