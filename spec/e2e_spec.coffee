@@ -187,3 +187,11 @@ describe 'JUnit Report builder', ->
       '      <![CDATA[Emoji: 🤦]]>\n' +
       '    </system-out>\n' +
       '  </testcase>')
+
+  it 'should escape quotes', ->
+    builder.testCase().error('it is "quoted"')
+
+    expect(builder.build()).toBe reportWith(
+      '  <testcase>\n' +
+      '    <error message="it is &quot;quoted&quot;"/>\n' +
+      '  </testcase>')
