@@ -8,6 +8,7 @@ function TestCase() {
   this._attributes = {};
   this._errorAttributes = {};
   this._failureAttributes = {};
+  this._errorAttachment = undefined;
 }
 
 TestCase.prototype.className = function (className) {
@@ -74,6 +75,11 @@ TestCase.prototype.getSkippedCount = function () {
   return Number(this._skipped);
 };
 
+TestCase.prototype.errorAttachment = function (path) {
+  this._errorAttachment = path;
+  return this;
+};
+
 TestCase.prototype.build = function (parentElement) {
   var testCaseElement = parentElement.ele('testcase', this._attributes);
   if (this._failure) {
@@ -91,8 +97,13 @@ TestCase.prototype.build = function (parentElement) {
   if (this._standardOutput) {
     testCaseElement.ele('system-out').cdata(this._standardOutput);
   }
+  var systemError = undefined;
   if (this._standardError) {
-    testCaseElement.ele('system-err').cdata(this._standardError);
+    systemError = testCaseElement.ele('system-err').cdata(this._standardError);
+
+    if(this._errorAttachment) {
+      systemError.txt('[[ATTACHMENT|' + this._errorAttachment + ']]');
+    }
   }
 };
 
