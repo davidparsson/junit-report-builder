@@ -97,7 +97,7 @@ TestCase.prototype.build = function (parentElement) {
   if (this._standardOutput) {
     testCaseElement.ele('system-out').cdata(this._standardOutput);
   }
-  var systemError = undefined;
+  var systemError;
   if (this._standardError) {
     systemError = testCaseElement.ele('system-err').cdata(this._standardError);
 
