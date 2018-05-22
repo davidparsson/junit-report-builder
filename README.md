@@ -67,6 +67,9 @@ License
 Changelog
 ---------
 
+### 1.3.1
+- Update dependencies to versions without known vulnerabilities.
+
 ### 1.3.0
 - Support [attaching files to tests](http://kohsuke.org/2012/03/13/attaching-files-to-junit-tests/). Thanks to [anto-wahanda](https://github.com/anto-wahanda).
 
