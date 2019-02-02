@@ -67,12 +67,32 @@ describe 'JUnit Report builder', ->
       '  </testcase>')
 
 
+  it 'should produce a root test case with failure and type when reported', ->
+    builder.testCase().failure('it failed', 'the type')
+
+    expect(builder.build()).toBe reportWith(
+      '  <testcase>\n' +
+      '    <failure message="it failed" type="the type"/>\n' +
+      '  </testcase>')
+
+
   it 'should produce a root test case with error when reported', ->
     builder.testCase().error('it errored')
 
     expect(builder.build()).toBe reportWith(
       '  <testcase>\n' +
       '    <error message="it errored"/>\n' +
+      '  </testcase>')
+
+
+  it 'should produce a root test case with error, type and content when reported', ->
+    builder.testCase().error('it errored', 'the type', 'the content')
+
+    expect(builder.build()).toBe reportWith(
+      '  <testcase>\n' +
+      '    <error message="it errored" type="the type">\n' +
+      '      <![CDATA[the content]]>\n' +
+      '    </error>\n' +
       '  </testcase>')
 
 

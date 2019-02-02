@@ -68,6 +68,10 @@ License
 Changelog
 ---------
 
+### 1.3.2
+- Added support for emitting the type attribute for error and failure elements of test cases
+- Added support for emitting cdata/content for the error element of a test case
+
 ### 1.3.1
 - Update dependencies to versions without known vulnerabilities.
 
