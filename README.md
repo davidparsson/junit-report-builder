@@ -68,6 +68,9 @@ License
 Changelog
 ---------
 
+### 1.3.3
+- Updated lodash to a version without known vulnerabilities.
+
 ### 1.3.2
 - Added support for emitting the type attribute for error and failure elements of test cases
 - Added support for emitting cdata/content for the error element of a test case
