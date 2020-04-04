@@ -68,6 +68,9 @@ License
 Changelog
 ---------
 
+### 1.3.4
+- Updated mkdirp to resolve [npm advisory 1179](https://www.npmjs.com/advisories/1179).
+
 ### 1.3.3
 - Updated lodash to a version without known vulnerabilities.
 
