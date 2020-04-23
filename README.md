@@ -68,8 +68,9 @@ License
 Changelog
 ---------
 
-### 1.3.4
-- Updated mkdirp to resolve [npm advisory 1179](https://www.npmjs.com/advisories/1179).
+### 2.0.0
+- Replace mkdirp by make-dir to resolve [npm advisory 1179](https://www.npmjs.com/advisories/1179).
+- Dropped support for node.js 0.10.x and 0.12.x
 
 ### 1.3.3
 - Updated lodash to a version without known vulnerabilities.

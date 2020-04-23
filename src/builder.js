@@ -1,7 +1,7 @@
 var _ = require('lodash');
 var xmlBuilder = require('xmlbuilder');
 var path = require('path');
-var mkdirp = require('mkdirp');
+var makeDir = require('make-dir');
 var fs = require('fs');
 var TestSuite = require('./test_suite');
 var TestCase = require('./test_case');
@@ -12,7 +12,7 @@ function JUnitReportBuilder(factory) {
 }
 
 JUnitReportBuilder.prototype.writeTo = function (reportPath) {
-  mkdirp.sync(path.dirname(reportPath));
+  makeDir.sync(path.dirname(reportPath));
   fs.writeFileSync(reportPath, this.build(), 'utf8');
 };
 
