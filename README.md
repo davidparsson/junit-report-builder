@@ -68,6 +68,9 @@ License
 Changelog
 ---------
 
+### 2.1.0
+- Added support for adding a `file` attribute to a test case
+
 ### 2.0.0
 - Replace mkdirp by make-dir to resolve [npm advisory 1179](https://www.npmjs.com/advisories/1179).
 - Dropped support for node.js 0.10.x and 0.12.x
