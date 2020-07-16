@@ -69,7 +69,7 @@ Changelog
 ---------
 
 ### 2.1.0
-- Added support for adding a `file` attribute to a test case
+- Added support for adding a `file` attribute to a test case. Thanks to [Ben Holland](https://github.com/hollandben).
 
 ### 2.0.0
 - Replace mkdirp by make-dir to resolve [npm advisory 1179](https://www.npmjs.com/advisories/1179).
