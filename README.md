@@ -1,7 +1,7 @@
 junit-report-builder
 ====================
 
-[![Build Status](https://travis-ci.org/davidparsson/junit-report-builder.svg?branch=master)](https://travis-ci.org/davidparsson/junit-report-builder)
+[![Build Status](https://github.com/davidparsson/junit-report-builder/workflows/CI/badge.svg)](https://github.com/davidparsson/junit-report-builder/actions?query=workflow%3ACI)
 [![Weekly Downloads](https://img.shields.io/npm/dw/junit-report-builder.svg)](https://www.npmjs.com/package/junit-report-builder)
 
 A project aimed at making it easier to build [Jenkins](http://jenkins-ci.org/) compatible XML based JUnit reports.
