@@ -27,6 +27,11 @@ TestCase.prototype.time = function (timeInSeconds) {
   return this;
 };
 
+TestCase.prototype.file = function (filepath) {
+  this._attributes.file = filepath;
+  return this;
+};
+
 TestCase.prototype.failure = function (message, type) {
   this._failure = true;
   if (message) {

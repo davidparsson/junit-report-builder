@@ -73,6 +73,16 @@ describe 'Test Case builder', ->
     })
 
 
+  it 'should add the provided file as an attribute', ->
+    testCase.file './path-to/the-test-file.coffee'
+
+    testCase.build parentElement
+
+    expect(parentElement.ele).toHaveBeenCalledWith('testcase', {
+      file: './path-to/the-test-file.coffee'
+    })
+
+
   it 'should add a failure node when test failed', ->
     testCase.failure()
 

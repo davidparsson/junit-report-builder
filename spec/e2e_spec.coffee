@@ -23,7 +23,7 @@ describe 'JUnit Report builder', ->
     builder.testCase().className("root.test.Class1")
     suite1 = builder.testSuite().name("first.Suite")
     suite1.testCase().name("Second test")
-    suite1.testCase().className("suite1.test.Class2").name("Third test")
+    suite1.testCase().className("suite1.test.Class2").name("Third test").file("./path-to/the-test-file.coffee")
     suite2 = builder.testSuite().name("second.Suite")
     suite2.testCase().failure("Failure message")
     suite2.testCase().stacktrace("Stacktrace")
