@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/davidparsson/junit-report-builder",
   "engines": {
-    "node": ">=4"
+    "node": ">=8"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
