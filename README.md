@@ -66,6 +66,10 @@ License
 Changelog
 ---------
 
+### 3.0.0
+- Properly prevent invalid characters from being included in the XML files.
+- Dropped support for node.js 4 and 6
+
 ### 2.1.0
 - Added support for adding a `file` attribute to a test case. Thanks to [Ben Holland](https://github.com/hollandben).
 
