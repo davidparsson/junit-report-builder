@@ -221,3 +221,11 @@ describe 'JUnit Report builder', ->
       '  <testcase>\n' +
       '    <error message="it is &quot;quoted&quot;"/>\n' +
       '  </testcase>')
+
+  it 'should remove invalid characters', ->
+    builder.testCase().error('Invalid\x00Characters\x08Stripped')
+
+    expect(builder.build()).toBe reportWith(
+      '  <testcase>\n' +
+      '    <error message="InvalidCharactersStripped"/>\n' +
+      '  </testcase>')
