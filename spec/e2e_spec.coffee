@@ -90,9 +90,7 @@ describe 'JUnit Report builder', ->
 
     expect(builder.build()).toBe reportWith(
       '  <testcase>\n' +
-      '    <error message="it errored" type="the type">\n' +
-      '      <![CDATA[the content]]>\n' +
-      '    </error>\n' +
+      '    <error message="it errored" type="the type"><![CDATA[the content]]></error>\n' +
       '  </testcase>')
 
 
@@ -167,9 +165,7 @@ describe 'JUnit Report builder', ->
     expect(builder.build()).toBe reportWith(
       '  <testsuite tests="1" failures="0" errors="0" skipped="0">\n' +
       '    <testcase>\n' +
-      '      <system-out>\n' +
-      '        <![CDATA[This was written to stdout!]]>\n' +
-      '      </system-out>\n' +
+      '      <system-out><![CDATA[This was written to stdout!]]></system-out>\n' +
       '    </testcase>\n' +
       '  </testsuite>')
 
@@ -180,9 +176,7 @@ describe 'JUnit Report builder', ->
     expect(builder.build()).toBe reportWith(
       '  <testsuite tests="1" failures="0" errors="0" skipped="0">\n' +
       '    <testcase>\n' +
-      '      <system-err>\n' +
-      '        <![CDATA[This was written to stderr!]]>\n' +
-      '      </system-err>\n' +
+      '      <system-err><![CDATA[This was written to stderr!]]></system-err>\n' +
       '    </testcase>\n' +
       '  </testsuite>')
 
@@ -217,9 +211,7 @@ describe 'JUnit Report builder', ->
 
     expect(builder.build()).toBe reportWith(
       '  <testcase>\n' +
-      '    <system-out>\n' +
-      '      <![CDATA[Emoji: 🤦]]>\n' +
-      '    </system-out>\n' +
+      '    <system-out><![CDATA[Emoji: 🤦]]></system-out>\n' +
       '  </testcase>')
 
   it 'should escape quotes', ->

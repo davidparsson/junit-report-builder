@@ -10,9 +10,7 @@
       <failure message="Failure message"/>
     </testcase>
     <testcase>
-      <failure>
-        <![CDATA[Stacktrace]]>
-      </failure>
+      <failure><![CDATA[Stacktrace]]></failure>
     </testcase>
     <testcase>
       <skipped/>
