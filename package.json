@@ -4,6 +4,7 @@
   "description": "Aimed at making it easier to build Jenkins compatible JUnit XML reports in plugins for testing frameworks",
   "main": "src/index.js",
   "scripts": {
+    "prepublish": "grunt",
     "test": "grunt"
   },
   "repository": {
