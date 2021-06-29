@@ -38,7 +38,6 @@
   },
   "dependencies": {
     "date-format": "0.0.2",
-    "lodash": "^4.17.15",
     "make-dir": "^1.3.0",
     "xmlbuilder": "^15.1.1"
   }
