@@ -1,3 +1,4 @@
+var _ = require('lodash');
 var xmlBuilder = require('xmlbuilder');
 var path = require('path');
 var makeDir = require('make-dir');
@@ -17,7 +18,7 @@ JUnitReportBuilder.prototype.writeTo = function (reportPath) {
 
 JUnitReportBuilder.prototype.build = function () {
   var xmlTree = xmlBuilder.create('testsuites', { encoding: 'UTF-8', invalidCharReplacement: '' });
-  this._testSuitesAndCases.forEach(function (suiteOrCase) {
+  _.forEach(this._testSuitesAndCases, function (suiteOrCase) {
     suiteOrCase.build(xmlTree);
   });
   return xmlTree.end({ pretty: true });
