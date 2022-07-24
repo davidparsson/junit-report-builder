@@ -66,6 +66,9 @@ License
 Changelog
 ---------
 
+### 3.0.1
+- Bump dependencies: lodash, make-dir, date-format, minimist
+
 ### 3.0.0
 - Properly prevent invalid characters from being included in the XML files.
 - Dropped support for node.js 4 and 6
