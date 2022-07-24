@@ -47,6 +47,9 @@
   "release-it": {
     "github": {
       "release": false
+    },
+    "hooks": {
+      "before:init": ["npm test"]
     }
   }
 }
