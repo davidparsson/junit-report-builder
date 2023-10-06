@@ -1,3 +1,4 @@
+var _ = require("lodash");
 function TestCase() {
   this._error = false;
   this._failure = false;
@@ -95,32 +96,49 @@ TestCase.prototype.errorAttachment = function (path) {
   return this;
 };
 
+TestCase.prototype.property = function (name, value) {
+  this._properties.push({ name: name, value: value });
+  return this;
+};
+
 TestCase.prototype.build = function (parentElement) {
-  var testCaseElement = parentElement.ele('testcase', this._attributes);
+  var testCaseElement = parentElement.ele("testcase", this._attributes);
+  if (this._properties.length) {
+    var propertiesElement = testCaseElement.ele("properties");
+    _.forEach(this._properties, function (property) {
+      propertiesElement.ele("property", {
+        name: property.name,
+        value: property.value,
+      });
+    });
+  }
   if (this._failure) {
-    var failureElement = testCaseElement.ele('failure', this._failureAttributes);
+    var failureElement = testCaseElement.ele(
+      "failure",
+      this._failureAttributes
+    );
     if (this._stacktrace) {
       failureElement.cdata(this._stacktrace);
     }
   }
   if (this._error) {
-    var errorElement = testCaseElement.ele('error', this._errorAttributes);
+    var errorElement = testCaseElement.ele("error", this._errorAttributes);
     if (this._errorContent) {
       errorElement.cdata(this._errorContent);
     }
   }
   if (this._skipped) {
-    testCaseElement.ele('skipped');
+    testCaseElement.ele("skipped");
   }
   if (this._standardOutput) {
-    testCaseElement.ele('system-out').cdata(this._standardOutput);
+    testCaseElement.ele("system-out").cdata(this._standardOutput);
   }
   var systemError;
   if (this._standardError) {
-    systemError = testCaseElement.ele('system-err').cdata(this._standardError);
+    systemError = testCaseElement.ele("system-err").cdata(this._standardError);
 
-    if(this._errorAttachment) {
-      systemError.txt('[[ATTACHMENT|' + this._errorAttachment + ']]');
+    if (this._errorAttachment) {
+      systemError.txt("[[ATTACHMENT|" + this._errorAttachment + "]]");
     }
   }
 };
