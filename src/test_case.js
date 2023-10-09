@@ -11,6 +11,7 @@ function TestCase() {
   this._failureAttributes = {};
   this._errorAttachment = undefined;
   this._errorContent = undefined;
+  this._properties = [];
 }
 
 TestCase.prototype.className = function (className) {
