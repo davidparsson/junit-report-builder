@@ -3,7 +3,11 @@
   <testcase classname="root.test.Class1"/>
   <testsuite name="first.Suite" tests="2" failures="0" errors="0" skipped="0">
     <testcase name="Second test"/>
-    <testcase classname="suite1.test.Class2" name="Third test" file="./path-to/the-test-file.coffee"/>
+    <testcase classname="suite1.test.Class2" name="Third test" file="./path-to/the-test-file.coffee">
+      <properties>
+        <property name="property name" value="property value"/>
+      </properties>
+    </testcase>
   </testsuite>
   <testsuite name="second.Suite" tests="3" failures="2" errors="0" skipped="1">
     <testcase>
