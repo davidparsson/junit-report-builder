@@ -4,6 +4,7 @@ TestCase = require '../src/test_case'
 describe 'Test Case builder', ->
   testCase = null
   parentElement = null
+  propertiesElement = null
   testCaseElement = null
   failureElement = null
   skippedElement = null
@@ -21,6 +22,7 @@ describe 'Test Case builder', ->
     skippedElement = createElementMock('skippedElement')
     systemOutElement = createElementMock('systemOutElement')
     systemErrElement = createElementMock('systemErrElement')
+    propertiesElement = createElementMock('propertiesElement')
 
     parentElement.ele.and.callFake (elementName) ->
       switch elementName
@@ -32,6 +34,7 @@ describe 'Test Case builder', ->
         when 'skipped' then return skippedElement
         when 'system-out' then return systemOutElement
         when 'system-err' then return systemErrElement
+        when 'properties' then return propertiesElement
 
     systemErrElement.cdata.and.callFake (stdError) ->
       switch stdError
@@ -82,6 +85,15 @@ describe 'Test Case builder', ->
       file: './path-to/the-test-file.coffee'
     })
 
+  it 'should add the provided property as elements', ->
+    testCase.property 'property name', 'property value'
+
+    testCase.build parentElement
+
+    expect(propertiesElement.ele).toHaveBeenCalledWith('property', {
+      name: 'property name',
+      value: 'property value'
+    })
 
   it 'should add a failure node when test failed', ->
     testCase.failure()

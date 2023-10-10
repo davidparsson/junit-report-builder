@@ -1,3 +1,4 @@
+var _ = require('lodash');
 function TestCase() {
   this._error = false;
   this._failure = false;
@@ -10,6 +11,7 @@ function TestCase() {
   this._failureAttributes = {};
   this._errorAttachment = undefined;
   this._errorContent = undefined;
+  this._properties = [];
 }
 
 TestCase.prototype.className = function (className) {
@@ -95,10 +97,27 @@ TestCase.prototype.errorAttachment = function (path) {
   return this;
 };
 
+TestCase.prototype.property = function (name, value) {
+  this._properties.push({ name: name, value: value });
+  return this;
+};
+
 TestCase.prototype.build = function (parentElement) {
   var testCaseElement = parentElement.ele('testcase', this._attributes);
+  if (this._properties.length) {
+    var propertiesElement = testCaseElement.ele('properties');
+    _.forEach(this._properties, function (property) {
+      propertiesElement.ele('property', {
+        name: property.name,
+        value: property.value,
+      });
+    });
+  }
   if (this._failure) {
-    var failureElement = testCaseElement.ele('failure', this._failureAttributes);
+    var failureElement = testCaseElement.ele(
+      'failure',
+      this._failureAttributes
+    );
     if (this._stacktrace) {
       failureElement.cdata(this._stacktrace);
     }
@@ -119,7 +138,7 @@ TestCase.prototype.build = function (parentElement) {
   if (this._standardError) {
     systemError = testCaseElement.ele('system-err').cdata(this._standardError);
 
-    if(this._errorAttachment) {
+    if (this._errorAttachment) {
       systemError.txt('[[ATTACHMENT|' + this._errorAttachment + ']]');
     }
   }
