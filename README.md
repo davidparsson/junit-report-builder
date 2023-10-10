@@ -62,6 +62,11 @@ Please refer to the [e2e_spec.coffee](spec/e2e_spec.coffee) for more details on 
 
 ## Changelog
 
+### 3.1.0
+
+-   Add support for generic properties for test cases. Thanks to [Pietro Ferrulli](https://github.com/Pi-fe).
+-   Bump dependencies
+
 ### 3.0.1
 
 -   Bump dependencies: lodash, make-dir, date-format, minimist
