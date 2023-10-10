@@ -2,8 +2,7 @@ var Builder = require('./builder');
 var TestSuite = require('./test_suite');
 var TestCase = require('./test_case');
 
-function Factory() {
-}
+function Factory() {}
 
 Factory.prototype.newBuilder = function () {
   return new Builder(this);
