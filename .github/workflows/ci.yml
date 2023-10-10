@@ -23,3 +23,17 @@ jobs:
         npm test
       env:
         CI: true
+
+  formatting:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 20.x
+    - name: npm install, check formatting
+      run: |
+        npm install
+        npm run check
