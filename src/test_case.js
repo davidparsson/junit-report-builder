@@ -114,10 +114,7 @@ TestCase.prototype.build = function (parentElement) {
     });
   }
   if (this._failure) {
-    var failureElement = testCaseElement.ele(
-      'failure',
-      this._failureAttributes
-    );
+    var failureElement = testCaseElement.ele('failure', this._failureAttributes);
     if (this._stacktrace) {
       failureElement.cdata(this._stacktrace);
     }

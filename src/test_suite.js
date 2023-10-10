@@ -28,7 +28,7 @@ TestSuite.prototype.timestamp = function (timestamp) {
 };
 
 TestSuite.prototype.property = function (name, value) {
-  this._properties.push({'name': name, 'value': value});
+  this._properties.push({ name: name, value: value });
   return this;
 };
 
@@ -73,7 +73,7 @@ TestSuite.prototype.build = function (parentElement) {
     _.forEach(this._properties, function (property) {
       propertiesElement.ele('property', {
         name: property.name,
-        value: property.value
+        value: property.value,
       });
     });
   }
