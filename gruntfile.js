@@ -8,7 +8,7 @@ module.exports = function (grunt) {
   grunt.initConfig({
     jasmine_nodejs: {
       options: {
-        specNameSuffix: ['Spec.js', 'Spec.coffee'],
+        specNameSuffix: ['Spec.js'],
       },
       test: {
         specs: ['spec/**'],
@@ -21,10 +21,6 @@ module.exports = function (grunt) {
         options: {
           atBegin: true,
         },
-      },
-      coffeeScript: {
-        files: ['spec/**/*.coffee'],
-        tasks: ['test'],
       },
       config: {
         files: ['gruntfile.js'],
