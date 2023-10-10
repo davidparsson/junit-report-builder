@@ -3,4 +3,4 @@ spec/
 .gitignore
 .travis.yml
 .editorconfig
-gruntfile.coffee
+gruntfile.js
