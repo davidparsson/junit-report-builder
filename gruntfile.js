@@ -39,6 +39,9 @@ module.exports = function (grunt) {
     },
     jshint: {
       javaScript: ['src/**/*.js', 'spec/**/*.js'],
+      options: {
+        esversion: 8,
+      },
     },
   });
 
