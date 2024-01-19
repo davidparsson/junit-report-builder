@@ -1,4 +1,4 @@
-const TestSuite = require('../src/test_suite');
+const { TestSuite } = require('../src/test_suite');
 
 describe('Test Suite builder', function () {
   let testSuite = null;
@@ -9,7 +9,13 @@ describe('Test Suite builder', function () {
 
   beforeEach(function () {
     const factory = jasmine.createSpyObj('factory', ['newTestCase']);
-    testCase = jasmine.createSpyObj('testCase', ['build', 'getFailureCount', 'getErrorCount', 'getSkippedCount']);
+    testCase = jasmine.createSpyObj('testCase', [
+      'build',
+      'getFailureCount',
+      'getErrorCount',
+      'getSkippedCount',
+      'getTestCaseCount',
+    ]);
 
     factory.newTestCase.and.callFake(() => testCase);
 
@@ -32,6 +38,8 @@ describe('Test Suite builder', function () {
           return propertiesElement;
       }
     });
+
+    testCase.getTestCaseCount.and.callFake(() => 1);
 
     testCase.getFailureCount.and.callFake(() => 0);
 

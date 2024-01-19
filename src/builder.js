@@ -1,19 +1,16 @@
 // @ts-check
-var _ = require('lodash');
-var xmlBuilder = require('xmlbuilder');
 var path = require('path');
 var makeDir = require('make-dir');
 var fs = require('fs');
-var TestSuite = require('./test_suite');
-var TestCase = require('./test_case');
+var { TestSuites } = require('./test_suites');
 
 class JUnitReportBuilder {
   /**
-   * @param {import('./factory')} factory
+   * @param {import('./factory').Factory} factory
    */
   constructor(factory) {
     this._factory = factory;
-    this._testSuitesAndCases = [];
+    this._rootTestSuites = new TestSuites(factory);
   }
 
   /**
@@ -25,40 +22,40 @@ class JUnitReportBuilder {
   }
 
   /**
-   * @returns {string} xml file content
+   * @returns {string}
    */
   build() {
-    var xmlTree = xmlBuilder.create('testsuites', { encoding: 'UTF-8', invalidCharReplacement: '' });
-    _.forEach(this._testSuitesAndCases, function (suiteOrCase) {
-      suiteOrCase.build(xmlTree);
-    });
+    var xmlTree = this._rootTestSuites.build();
     return xmlTree.end({ pretty: true });
   }
 
   /**
-   * @returns {import('./test_suite')}
+   * @returns {import('./test_suites').TestSuites}
+   */
+  testSuites() {
+    return this._rootTestSuites;
+  }
+
+  /**
+   * @returns {import('./test_suite').TestSuite}
    */
   testSuite() {
-    var suite = this._factory.newTestSuite();
-    this._testSuitesAndCases.push(suite);
-    return suite;
+    return this._rootTestSuites.testSuite();
   }
 
   /**
-   * @returns {import('./test_case')}
+   * @returns {import('./test_case').TestCase}
    */
   testCase() {
-    var testCase = this._factory.newTestCase();
-    this._testSuitesAndCases.push(testCase);
-    return testCase;
+    return this._rootTestSuites.testCase();
   }
 
   /**
-   * @returns {ReturnType<import('./factory')['newBuilder']>}
+   * @returns {JUnitReportBuilder}
    */
   newBuilder() {
-    return this._factory.newBuilder();
+    return new JUnitReportBuilder(this._factory);
   }
 }
 
-module.exports = JUnitReportBuilder;
+module.exports = { Builder: JUnitReportBuilder };

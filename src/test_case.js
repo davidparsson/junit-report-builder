@@ -1,50 +1,28 @@
 // @ts-check
 var _ = require('lodash');
-class TestCase {
-  constructor() {
+var { TestNode } = require('./test_node');
+
+class TestCase extends TestNode {
+  /**
+   * @param {import('./factory').Factory} factory
+   */
+  constructor(factory) {
+    super(factory, 'testcase');
     this._error = false;
     this._failure = false;
     this._skipped = false;
     this._standardOutput = undefined;
     this._standardError = undefined;
     this._stacktrace = undefined;
-    this._attributes = {};
     this._errorAttributes = {};
     this._failureAttributes = {};
     this._errorAttachment = undefined;
     this._errorContent = undefined;
-    this._properties = [];
-  }
-
-  /**
-   * @param {string} className
-   * @chainable
-   */
-  className(className) {
-    this._attributes.classname = className;
-    return this;
-  }
-
-  /**
-   * @param {string} name
-   * @chainable
-   */
-  name(name) {
-    this._attributes.name = name;
-    return this;
-  }
-
-  /**
-   * @param {number} timeInSeconds
-   * @chainable
-   */
-  time(timeInSeconds) {
-    this._attributes.time = timeInSeconds;
-    return this;
   }
 
   /**
    * @param {string} filepath
+   * @returns {TestCase}
    * @chainable
    */
   file(filepath) {
@@ -53,8 +31,9 @@ class TestCase {
   }
 
   /**
-   * @param {string} message
-   * @param {string} type
+   * @param {string} [message]
+   * @param {string} [type]
+   * @returns {TestCase}
    * @chainable
    */
   failure(message, type) {
@@ -69,9 +48,10 @@ class TestCase {
   }
 
   /**
-   * @param {string} message
-   * @param {string} type
-   * @param {string} content
+   * @param {string} [message]
+   * @param {string} [type]
+   * @param {string} [content]
+   * @returns {TestCase}
    * @chainable
    */
   error(message, type, content) {
@@ -89,7 +69,8 @@ class TestCase {
   }
 
   /**
-   * @param {string} stacktrace
+   * @param {string} [stacktrace]
+   * @returns {TestCase}
    * @chainable
    */
   stacktrace(stacktrace) {
@@ -99,6 +80,7 @@ class TestCase {
   }
 
   /**
+   * @returns {TestCase}
    * @chainable
    */
   skipped() {
@@ -107,7 +89,8 @@ class TestCase {
   }
 
   /**
-   * @param {string} log
+   * @param {string} [log]
+   * @returns {TestCase}
    * @chainable
    */
   standardOutput(log) {
@@ -116,12 +99,20 @@ class TestCase {
   }
 
   /**
-   * @param {string} log
+   * @param {string} [log]
+   * @returns {TestCase}
    * @chainable
    */
   standardError(log) {
     this._standardError = log;
     return this;
+  }
+
+  /**
+   * @returns {number}
+   */
+  getTestCaseCount() {
+    return 1;
   }
 
   /**
@@ -146,7 +137,9 @@ class TestCase {
   }
 
   /**
+   *
    * @param {string} path
+   * @returns {TestCase}
    * @chainable
    */
   errorAttachment(path) {
@@ -155,29 +148,10 @@ class TestCase {
   }
 
   /**
-   * @param {string} name
-   * @param {string} value
-   * @chainable
-   */
-  property(name, value) {
-    this._properties.push({ name: name, value: value });
-    return this;
-  }
-
-  /**
    * @param {import('xmlbuilder').XMLElement} parentElement
    */
   build(parentElement) {
-    var testCaseElement = parentElement.ele('testcase', this._attributes);
-    if (this._properties.length) {
-      var propertiesElement = testCaseElement.ele('properties');
-      _.forEach(this._properties, function (property) {
-        propertiesElement.ele('property', {
-          name: property.name,
-          value: property.value,
-        });
-      });
-    }
+    const testCaseElement = this.buildNode(this.createNode(parentElement));
     if (this._failure) {
       var failureElement = testCaseElement.ele('failure', this._failureAttributes);
       if (this._stacktrace) {
@@ -204,7 +178,8 @@ class TestCase {
         systemError.txt('[[ATTACHMENT|' + this._errorAttachment + ']]');
       }
     }
+    return testCaseElement;
   }
 }
 
-module.exports = TestCase;
+module.exports = { TestCase: TestCase };
