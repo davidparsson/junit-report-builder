@@ -2,18 +2,29 @@ var Builder = require('./builder');
 var TestSuite = require('./test_suite');
 var TestCase = require('./test_case');
 
-function Factory() {}
+class Factory {
+  constructor() {}
 
-Factory.prototype.newBuilder = function () {
-  return new Builder(this);
-};
+  /**
+   * @returns {Builder}
+   */
+  newBuilder() {
+    return new Builder(this);
+  }
 
-Factory.prototype.newTestSuite = function () {
-  return new TestSuite(this);
-};
+  /**
+   * @returns {TestSuite}
+   */
+  newTestSuite() {
+    return new TestSuite(this);
+  }
 
-Factory.prototype.newTestCase = function () {
-  return new TestCase(this);
-};
+  /**
+   * @returns {TestCase}
+   */
+  newTestCase() {
+    return new TestCase(this);
+  }
+}
 
 module.exports = Factory;
