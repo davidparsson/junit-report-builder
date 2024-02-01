@@ -11,7 +11,6 @@ class TestNode {
     this._nodeName = nodeName;
     this._attributes = {};
     this._properties = [];
-    this._children = [];
   }
 
   /**
@@ -79,9 +78,6 @@ class TestNode {
         });
       });
     }
-    _.forEach(this._children, function (child) {
-      child.build(element);
-    });
     return element;
   }
 

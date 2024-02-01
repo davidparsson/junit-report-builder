@@ -5,6 +5,15 @@ var { TestNode } = require('./test_node');
 
 class TestGroup extends TestNode {
   /**
+   * @param {import('./factory').Factory} factory
+   * @param {string} nodeName
+   */
+  constructor(factory, nodeName) {
+    super(factory, nodeName);
+    this._children = [];
+  }
+
+  /**
    * @param {string|Date} timestamp
    * @returns {TestGroup}
    * @chainable
@@ -83,6 +92,19 @@ class TestGroup extends TestNode {
     this._attributes.errors = this.getErrorCount();
     this._attributes.skipped = this.getSkippedCount();
     return super.build(parentElement);
+  }
+
+  /**
+   * @protected
+   * @param {import('xmlbuilder').XMLElement} element
+   * @returns {import('xmlbuilder').XMLElement}
+   */
+  buildNode(element) {
+    element = super.buildNode(element);
+    _.forEach(this._children, function (child) {
+      child.build(element);
+    });
+    return element;
   }
 }
 
