@@ -62,6 +62,10 @@ Please refer to the [e2e_spec.coffee](spec/e2e_spec.coffee) for more details on 
 
 ## Changelog
 
+### 3.2.1
+
+-   Update documentation.
+
 ### 3.2.0
 
 -   Support name and test count attributes for the root test suites element. Thanks to [Simeon Cheeseman](https://github.com/SimeonC).
