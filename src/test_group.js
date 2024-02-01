@@ -6,10 +6,10 @@ var { TestNode } = require('./test_node');
 class TestGroup extends TestNode {
   /**
    * @param {import('./factory').Factory} factory
-   * @param {string} nodeName
+   * @param {string} elementName
    */
-  constructor(factory, nodeName) {
-    super(factory, nodeName);
+  constructor(factory, elementName) {
+    super(factory, elementName);
     this._children = [];
   }
 

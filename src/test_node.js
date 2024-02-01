@@ -4,11 +4,11 @@ var _ = require('lodash');
 class TestNode {
   /**
    * @param {import('./factory').Factory} factory
-   * @param {string} nodeName
+   * @param {string} elementName
    */
-  constructor(factory, nodeName) {
+  constructor(factory, elementName) {
     this._factory = factory;
-    this._nodeName = nodeName;
+    this._elementName = elementName;
     this._attributes = {};
     this._properties = [];
   }
@@ -50,7 +50,7 @@ class TestNode {
    * @returns {import('xmlbuilder').XMLElement}
    */
   createNode(parentElement) {
-    return parentElement.ele(this._nodeName, this._attributes);
+    return parentElement.ele(this._elementName, this._attributes);
   }
 
   /**
