@@ -75,7 +75,7 @@ class TestGroup extends TestNode {
   /**
    * @protected
    * @param {Function} counterFunction
-   * @returns
+   * @returns {number}
    */
   _sumTestCaseCounts(counterFunction) {
     var counts = _.map(this._children, counterFunction);
