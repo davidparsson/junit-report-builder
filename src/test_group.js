@@ -28,6 +28,15 @@ class TestGroup extends TestNode {
   }
 
   /**
+   * @returns {import('./test_case').TestCase}
+   */
+  testCase() {
+    var testCase = this._factory.newTestCase();
+    this._children.push(testCase);
+    return testCase;
+  }
+
+  /**
    * @returns {number}
    */
   getTestCaseCount() {
@@ -71,15 +80,6 @@ class TestGroup extends TestNode {
   _sumTestCaseCounts(counterFunction) {
     var counts = _.map(this._children, counterFunction);
     return _.sum(counts);
-  }
-
-  /**
-   * @returns {import('./test_case').TestCase}
-   */
-  testCase() {
-    var testCase = this._factory.newTestCase();
-    this._children.push(testCase);
-    return testCase;
   }
 
   /**
