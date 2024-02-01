@@ -68,7 +68,7 @@ describe('JUnit Report builder', function () {
     ));
 
   it('should set testsuites name', () => {
-    builder.testSuites().name('testSuitesName');
+    builder.name('testSuitesName');
     expect(builder.build()).toBe(
       // prettier-ignore
       '<?xml version="1.0" encoding="UTF-8"?>\n' +

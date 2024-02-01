@@ -30,10 +30,13 @@ class JUnitReportBuilder {
   }
 
   /**
-   * @returns {import('./test_suites').TestSuites}
+   * @param {string} name
+   * @returns {JUnitReportBuilder}
+   * @chainable
    */
-  testSuites() {
-    return this._rootTestSuites;
+  name(name) {
+    this._rootTestSuites.name(name);
+    return this;
   }
 
   /**
