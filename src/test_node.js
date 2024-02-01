@@ -96,21 +96,21 @@ class TestNode {
    * @returns {number}
    */
   getFailureCount() {
-    return 0;
+    throw new Error('Not implemented');
   }
 
   /**
    * @returns {number}
    */
   getErrorCount() {
-    return 0;
+    throw new Error('Not implemented');
   }
 
   /**
    * @returns {number}
    */
   getSkippedCount() {
-    return 0;
+    throw new Error('Not implemented');
   }
 
   /**
