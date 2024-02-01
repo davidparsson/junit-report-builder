@@ -46,6 +46,41 @@ class TestNode {
   }
 
   /**
+   * @returns {number}
+   */
+  getTestCaseCount() {
+    throw new Error('Not implemented');
+  }
+
+  /**
+   * @returns {number}
+   */
+  getFailureCount() {
+    throw new Error('Not implemented');
+  }
+
+  /**
+   * @returns {number}
+   */
+  getErrorCount() {
+    throw new Error('Not implemented');
+  }
+
+  /**
+   * @returns {number}
+   */
+  getSkippedCount() {
+    throw new Error('Not implemented');
+  }
+
+  /**
+   * @param {import('xmlbuilder').XMLElement} [parentElement]
+   */
+  build(parentElement) {
+    return this.buildNode(this.createElement(parentElement));
+  }
+
+  /**
    * @protected
    * @param {import('xmlbuilder').XMLElement} [parentElement]
    * @returns {import('xmlbuilder').XMLElement}
@@ -85,41 +120,6 @@ class TestNode {
       });
     }
     return element;
-  }
-
-  /**
-   * @returns {number}
-   */
-  getTestCaseCount() {
-    throw new Error('Not implemented');
-  }
-
-  /**
-   * @returns {number}
-   */
-  getFailureCount() {
-    throw new Error('Not implemented');
-  }
-
-  /**
-   * @returns {number}
-   */
-  getErrorCount() {
-    throw new Error('Not implemented');
-  }
-
-  /**
-   * @returns {number}
-   */
-  getSkippedCount() {
-    throw new Error('Not implemented');
-  }
-
-  /**
-   * @param {import('xmlbuilder').XMLElement} [parentElement]
-   */
-  build(parentElement) {
-    return this.buildNode(this.createElement(parentElement));
   }
 }
 
