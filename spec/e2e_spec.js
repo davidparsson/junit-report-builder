@@ -60,12 +60,13 @@ describe('JUnit Report builder', function () {
     expect(actual).toBe(expected);
   });
 
-  it('should produce an empty list of test suites when nothing reported', () =>
+  it('should produce an empty list of test suites when nothing reported', () => {
     expect(builder.build()).toBe(
       // prettier-ignore
       '<?xml version="1.0" encoding="UTF-8"?>\n' +
       '<testsuites tests="0" failures="0" errors="0" skipped="0"/>',
-    ));
+    );
+  });
 
   it('should set testsuites name', () => {
     builder.name('testSuitesName');
