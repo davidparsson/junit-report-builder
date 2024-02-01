@@ -1,5 +1,6 @@
 // @ts-check
 var _ = require('lodash');
+var xmlBuilder = require('xmlbuilder');
 
 class TestNode {
   /**
@@ -46,11 +47,26 @@ class TestNode {
 
   /**
    * @protected
-   * @param {import('xmlbuilder').XMLElement} parentElement
+   * @param {import('xmlbuilder').XMLElement} [parentElement]
    * @returns {import('xmlbuilder').XMLElement}
    */
   createElement(parentElement) {
-    return parentElement.ele(this._elementName, this._attributes);
+    if (parentElement) {
+      return parentElement.ele(this._elementName, this._attributes);
+    }
+    return this.createRootElement();
+  }
+
+  /**
+   * @private
+   * @returns {import('xmlbuilder').XMLElement}
+   */
+  createRootElement() {
+    const element = xmlBuilder.create(this._elementName, { encoding: 'UTF-8', invalidCharReplacement: '' });
+    Object.keys(this._attributes).forEach((key) => {
+      element.att(key, this._attributes[key]);
+    });
+    return element;
   }
 
   /**
@@ -100,7 +116,7 @@ class TestNode {
   }
 
   /**
-   * @param {import('xmlbuilder').XMLElement} parentElement
+   * @param {import('xmlbuilder').XMLElement} [parentElement]
    */
   build(parentElement) {
     return this.buildNode(this.createElement(parentElement));

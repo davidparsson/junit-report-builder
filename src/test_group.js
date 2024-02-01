@@ -83,7 +83,7 @@ class TestGroup extends TestNode {
   }
 
   /**
-   * @param {import('xmlbuilder').XMLElement} parentElement
+   * @param {import('xmlbuilder').XMLElement} [parentElement]
    * @returns {import('xmlbuilder').XMLElement}
    */
   build(parentElement) {

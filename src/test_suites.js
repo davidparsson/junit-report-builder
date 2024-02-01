@@ -1,5 +1,4 @@
 // @ts-check
-var xmlBuilder = require('xmlbuilder');
 var { TestGroup } = require('./test_group');
 
 class TestSuites extends TestGroup {
@@ -17,18 +16,6 @@ class TestSuites extends TestGroup {
     var suite = this._factory.newTestSuite();
     this._children.push(suite);
     return suite;
-  }
-
-  /**
-   * @protected
-   * @returns {import('xmlbuilder').XMLElement}
-   */
-  createElement() {
-    const node = xmlBuilder.create('testsuites', { encoding: 'UTF-8', invalidCharReplacement: '' });
-    Object.keys(this._attributes).forEach((key) => {
-      node.att(key, this._attributes[key]);
-    });
-    return node;
   }
 }
 
