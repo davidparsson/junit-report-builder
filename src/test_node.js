@@ -25,16 +25,6 @@ class TestNode {
   }
 
   /**
-   * @param {string} className
-   * @returns {TestNode}
-   * @chainable
-   */
-  className(className) {
-    this._attributes.classname = className;
-    return this;
-  }
-
-  /**
    * @param {string} name
    * @returns {TestNode}
    * @chainable

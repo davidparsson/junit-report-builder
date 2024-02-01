@@ -21,6 +21,16 @@ class TestCase extends TestNode {
   }
 
   /**
+   * @param {string} className
+   * @returns {TestCase}
+   * @chainable
+   */
+  className(className) {
+    this._attributes.classname = className;
+    return this;
+  }
+
+  /**
    * @param {string} filepath
    * @returns {TestCase}
    * @chainable
