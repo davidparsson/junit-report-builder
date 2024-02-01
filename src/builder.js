@@ -54,7 +54,7 @@ class JUnitReportBuilder {
    * @returns {JUnitReportBuilder}
    */
   newBuilder() {
-    return new JUnitReportBuilder(this._factory);
+    return this._factory.newBuilder();
   }
 }
 
