@@ -1,43 +1,64 @@
-var _ = require('lodash');
-var xmlBuilder = require('xmlbuilder');
+// @ts-check
 var path = require('path');
 var makeDir = require('make-dir');
 var fs = require('fs');
-var TestSuite = require('./test_suite');
-var TestCase = require('./test_case');
+var { TestSuites } = require('./test_suites');
 
-function JUnitReportBuilder(factory) {
-  this._factory = factory;
-  this._testSuitesAndCases = [];
+class JUnitReportBuilder {
+  /**
+   * @param {import('./factory').Factory} factory
+   */
+  constructor(factory) {
+    this._factory = factory;
+    this._rootTestSuites = new TestSuites(factory);
+  }
+
+  /**
+   * @param {string} reportPath
+   */
+  writeTo(reportPath) {
+    makeDir.sync(path.dirname(reportPath));
+    fs.writeFileSync(reportPath, this.build(), 'utf8');
+  }
+
+  /**
+   * @returns {string}
+   */
+  build() {
+    var xmlTree = this._rootTestSuites.build();
+    return xmlTree.end({ pretty: true });
+  }
+
+  /**
+   * @param {string} name
+   * @returns {JUnitReportBuilder}
+   * @chainable
+   */
+  name(name) {
+    this._rootTestSuites.name(name);
+    return this;
+  }
+
+  /**
+   * @returns {import('./test_suite').TestSuite}
+   */
+  testSuite() {
+    return this._rootTestSuites.testSuite();
+  }
+
+  /**
+   * @returns {import('./test_case').TestCase}
+   */
+  testCase() {
+    return this._rootTestSuites.testCase();
+  }
+
+  /**
+   * @returns {JUnitReportBuilder}
+   */
+  newBuilder() {
+    return this._factory.newBuilder();
+  }
 }
 
-JUnitReportBuilder.prototype.writeTo = function (reportPath) {
-  makeDir.sync(path.dirname(reportPath));
-  fs.writeFileSync(reportPath, this.build(), 'utf8');
-};
-
-JUnitReportBuilder.prototype.build = function () {
-  var xmlTree = xmlBuilder.create('testsuites', { encoding: 'UTF-8', invalidCharReplacement: '' });
-  _.forEach(this._testSuitesAndCases, function (suiteOrCase) {
-    suiteOrCase.build(xmlTree);
-  });
-  return xmlTree.end({ pretty: true });
-};
-
-JUnitReportBuilder.prototype.testSuite = function () {
-  var suite = this._factory.newTestSuite();
-  this._testSuitesAndCases.push(suite);
-  return suite;
-};
-
-JUnitReportBuilder.prototype.testCase = function () {
-  var testCase = this._factory.newTestCase();
-  this._testSuitesAndCases.push(testCase);
-  return testCase;
-};
-
-JUnitReportBuilder.prototype.newBuilder = function () {
-  return this._factory.newBuilder();
-};
-
-module.exports = JUnitReportBuilder;
+module.exports = { Builder: JUnitReportBuilder };

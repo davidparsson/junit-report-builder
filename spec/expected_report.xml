@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites>
+<testsuites tests="6" failures="2" errors="0" skipped="1">
   <testcase classname="root.test.Class1"/>
   <testsuite name="first.Suite" tests="2" failures="0" errors="0" skipped="0">
     <testcase name="Second test"/>

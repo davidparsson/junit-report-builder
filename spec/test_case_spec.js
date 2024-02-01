@@ -1,4 +1,4 @@
-const TestCase = require('../src/test_case');
+const { TestCase } = require('../src/test_case');
 
 describe('Test Case builder', function () {
   let testCase = null;

@@ -14,8 +14,21 @@ describe('JUnit Report builder', function () {
     }),
   );
 
-  const reportWith = (content) =>
-    '<?xml version="1.0" encoding="UTF-8"?>\n' + '<testsuites>\n' + content + '\n' + '</testsuites>';
+  const parseProperties = (properties = {}) => {
+    let result = '';
+    ['tests', 'failures', 'errors', 'skipped'].forEach((key) => {
+      result += key + '="' + (properties[key] || 0) + '" ';
+    });
+    for (const key in properties) {
+      if (['tests', 'failures', 'errors', 'skipped'].includes(key)) {
+        continue;
+      }
+      result += key + '="' + properties[key] + '" ';
+    }
+    return result.trim();
+  };
+
+  const reportWith = (content, testSuitesProperties) => '<?xml version="1.0" encoding="UTF-8"?>\n' + content;
 
   it('should produce a report identical to the expected one', function () {
     builder.testCase().className('root.test.Class1');
@@ -40,12 +53,22 @@ describe('JUnit Report builder', function () {
     expect(actual).toBe(expected);
   });
 
-  it('should produce an empty list of test suites when nothing reported', () =>
+  it('should produce an empty list of test suites when nothing reported', () => {
     expect(builder.build()).toBe(
       // prettier-ignore
       '<?xml version="1.0" encoding="UTF-8"?>\n' +
-      '<testsuites/>',
-    ));
+      '<testsuites tests="0" failures="0" errors="0" skipped="0"/>',
+    );
+  });
+
+  it('should set testsuites name', () => {
+    builder.name('testSuitesName');
+    expect(builder.build()).toBe(
+      // prettier-ignore
+      '<?xml version="1.0" encoding="UTF-8"?>\n' +
+      '<testsuites name="testSuitesName" tests="0" failures="0" errors="0" skipped="0"/>',
+    );
+  });
 
   it('should produce an empty test suite when a test suite reported', function () {
     builder.testSuite();
@@ -53,7 +76,9 @@ describe('JUnit Report builder', function () {
     expect(builder.build()).toBe(
       reportWith(
         // prettier-ignore
-        '  <testsuite tests="0" failures="0" errors="0" skipped="0"/>',
+        '<testsuites tests="0" failures="0" errors="0" skipped="0">\n' +
+        '  <testsuite tests="0" failures="0" errors="0" skipped="0"/>\n' +
+        '</testsuites>',
       ),
     );
   });
@@ -64,7 +89,9 @@ describe('JUnit Report builder', function () {
     expect(builder.build()).toBe(
       reportWith(
         // prettier-ignore
-        '  <testcase/>',
+        '<testsuites tests="1" failures="0" errors="0" skipped="0">\n' +
+        '  <testcase/>\n' +
+        '</testsuites>',
       ),
     );
   });
@@ -75,9 +102,11 @@ describe('JUnit Report builder', function () {
     expect(builder.build()).toBe(
       reportWith(
         // prettier-ignore
+        '<testsuites tests="1" failures="1" errors="0" skipped="0">\n' +
         '  <testcase>\n' +
         '    <failure message="it failed"/>\n' +
-        '  </testcase>',
+        '  </testcase>\n' +
+        '</testsuites>',
       ),
     );
   });
@@ -88,9 +117,11 @@ describe('JUnit Report builder', function () {
     expect(builder.build()).toBe(
       reportWith(
         // prettier-ignore
+        '<testsuites tests="1" failures="1" errors="0" skipped="0">\n' +
         '  <testcase>\n' +
         '    <failure message="it failed" type="the type"/>\n' +
-        '  </testcase>',
+        '  </testcase>\n' +
+        '</testsuites>',
       ),
     );
   });
@@ -101,9 +132,11 @@ describe('JUnit Report builder', function () {
     expect(builder.build()).toBe(
       reportWith(
         // prettier-ignore
+        '<testsuites tests="1" failures="0" errors="1" skipped="0">\n' +
         '  <testcase>\n' +
         '    <error message="it errored"/>\n' +
-        '  </testcase>',
+        '  </testcase>\n' +
+        '</testsuites>',
       ),
     );
   });
@@ -114,9 +147,11 @@ describe('JUnit Report builder', function () {
     expect(builder.build()).toBe(
       reportWith(
         // prettier-ignore
+        '<testsuites tests="1" failures="0" errors="1" skipped="0">\n' +
         '  <testcase>\n' +
         '    <error message="it errored" type="the type"><![CDATA[the content]]></error>\n' +
-        '  </testcase>',
+        '  </testcase>\n' +
+        '</testsuites>',
       ),
     );
   });
@@ -127,9 +162,11 @@ describe('JUnit Report builder', function () {
     expect(builder.build()).toBe(
       reportWith(
         // prettier-ignore
+        '<testsuites tests="1" failures="0" errors="0" skipped="0">\n' +
         '  <testsuite tests="1" failures="0" errors="0" skipped="0">\n' +
         '    <testcase/>\n' +
-        '  </testsuite>',
+        '  </testsuite>\n' +
+        '</testsuites>',
       ),
     );
   });
@@ -140,11 +177,13 @@ describe('JUnit Report builder', function () {
     expect(builder.build()).toBe(
       reportWith(
         // prettier-ignore
+        '<testsuites tests="1" failures="1" errors="0" skipped="0">\n' +
         '  <testsuite tests="1" failures="1" errors="0" skipped="0">\n' +
         '    <testcase>\n' +
         '      <failure/>\n' +
         '    </testcase>\n' +
-        '  </testsuite>',
+        '  </testsuite>\n' +
+        '</testsuites>',
       ),
     );
   });
@@ -155,11 +194,13 @@ describe('JUnit Report builder', function () {
     expect(builder.build()).toBe(
       reportWith(
         // prettier-ignore
+        '<testsuites tests="1" failures="0" errors="1" skipped="0">\n' +
         '  <testsuite tests="1" failures="0" errors="1" skipped="0">\n' +
         '    <testcase>\n' +
         '      <error/>\n' +
         '    </testcase>\n' +
-        '  </testsuite>',
+        '  </testsuite>\n' +
+        '</testsuites>',
       ),
     );
   });
@@ -170,11 +211,13 @@ describe('JUnit Report builder', function () {
     expect(builder.build()).toBe(
       reportWith(
         // prettier-ignore
+        '<testsuites tests="1" failures="0" errors="0" skipped="1">\n' +
         '  <testsuite tests="1" failures="0" errors="0" skipped="1">\n' +
         '    <testcase>\n' +
         '      <skipped/>\n' +
         '    </testcase>\n' +
-        '  </testsuite>',
+        '  </testsuite>\n' +
+        '</testsuites>',
       ),
     );
   });
@@ -185,7 +228,9 @@ describe('JUnit Report builder', function () {
     expect(builder.build()).toBe(
       reportWith(
         // prettier-ignore
-        '  <testsuite time="2.5" tests="0" failures="0" errors="0" skipped="0"/>',
+        '<testsuites tests="0" failures="0" errors="0" skipped="0">\n' +
+        '  <testsuite time="2.5" tests="0" failures="0" errors="0" skipped="0"/>\n' +
+        '</testsuites>',
       ),
     );
   });
@@ -196,7 +241,9 @@ describe('JUnit Report builder', function () {
     expect(builder.build()).toBe(
       reportWith(
         // prettier-ignore
-        '  <testsuite timestamp="2015-11-22T13:37:59" tests="0" failures="0" errors="0" skipped="0"/>',
+        '<testsuites tests="0" failures="0" errors="0" skipped="0">\n' +
+        '  <testsuite timestamp="2015-11-22T13:37:59" tests="0" failures="0" errors="0" skipped="0"/>\n' +
+        '</testsuites>',
       ),
     );
   });
@@ -207,9 +254,11 @@ describe('JUnit Report builder', function () {
     expect(builder.build()).toBe(
       reportWith(
         // prettier-ignore
+        '<testsuites tests="1" failures="0" errors="0" skipped="0">\n' +
         '  <testsuite tests="1" failures="0" errors="0" skipped="0">\n' +
         '    <testcase time="2.5"/>\n' +
-        '  </testsuite>',
+        '  </testsuite>\n' +
+        '</testsuites>',
       ),
     );
   });
@@ -220,11 +269,13 @@ describe('JUnit Report builder', function () {
     expect(builder.build()).toBe(
       reportWith(
         // prettier-ignore
+        '<testsuites tests="1" failures="0" errors="0" skipped="0">\n' +
         '  <testsuite tests="1" failures="0" errors="0" skipped="0">\n' +
         '    <testcase>\n' +
         '      <system-out><![CDATA[This was written to stdout!]]></system-out>\n' +
         '    </testcase>\n' +
-        '  </testsuite>',
+        '  </testsuite>\n' +
+        '</testsuites>',
       ),
     );
   });
@@ -235,11 +286,13 @@ describe('JUnit Report builder', function () {
     expect(builder.build()).toBe(
       reportWith(
         // prettier-ignore
+        '<testsuites tests="1" failures="0" errors="0" skipped="0">\n' +
         '  <testsuite tests="1" failures="0" errors="0" skipped="0">\n' +
         '    <testcase>\n' +
         '      <system-err><![CDATA[This was written to stderr!]]></system-err>\n' +
         '    </testcase>\n' +
-        '  </testsuite>',
+        '  </testsuite>\n' +
+        '</testsuites>',
       ),
     );
   });
@@ -254,6 +307,7 @@ describe('JUnit Report builder', function () {
     expect(builder.build()).toBe(
       reportWith(
         // prettier-ignore
+        '<testsuites tests="1" failures="0" errors="0" skipped="0">\n' +
         '  <testsuite tests="1" failures="0" errors="0" skipped="0">\n' +
         '    <testcase>\n' +
         '      <system-err>\n' +
@@ -261,7 +315,8 @@ describe('JUnit Report builder', function () {
         '        [[ATTACHMENT|absolute/path/to/attachment]]\n' +
         '      </system-err>\n' +
         '    </testcase>\n' +
-        '  </testsuite>',
+        '  </testsuite>\n' +
+        '</testsuites>',
       ),
     );
   });
@@ -274,9 +329,11 @@ describe('JUnit Report builder', function () {
     expect(builder.build()).toBe(
       reportWith(
         // prettier-ignore
+        '<testsuites tests="2" failures="0" errors="0" skipped="0">\n' +
         '  <testcase name="1"/>\n' +
         '  <testsuite name="2" tests="0" failures="0" errors="0" skipped="0"/>\n' +
-        '  <testcase name="3"/>',
+        '  <testcase name="3"/>\n' +
+        '</testsuites>',
       ),
     );
   });
@@ -287,9 +344,11 @@ describe('JUnit Report builder', function () {
     expect(builder.build()).toBe(
       reportWith(
         // prettier-ignore
+        '<testsuites tests="1" failures="0" errors="0" skipped="0">\n' +
         '  <testcase>\n' +
         '    <system-out><![CDATA[Emoji: 🤦]]></system-out>\n' +
-        '  </testcase>',
+        '  </testcase>\n' +
+        '</testsuites>',
       ),
     );
   });
@@ -300,9 +359,11 @@ describe('JUnit Report builder', function () {
     expect(builder.build()).toBe(
       reportWith(
         // prettier-ignore
+        '<testsuites tests="1" failures="0" errors="1" skipped="0">\n' +
         '  <testcase>\n' +
         '    <error message="it is &quot;quoted&quot;"/>\n' +
-        '  </testcase>',
+        '  </testcase>\n' +
+        '</testsuites>',
       ),
     );
   });
@@ -313,9 +374,11 @@ describe('JUnit Report builder', function () {
     expect(builder.build()).toBe(
       reportWith(
         // prettier-ignore
+        '<testsuites tests="1" failures="0" errors="1" skipped="0">\n' +
         '  <testcase>\n' +
         '    <error message="InvalidCharactersStripped"/>\n' +
-        '  </testcase>',
+        '  </testcase>\n' +
+        '</testsuites>',
       ),
     );
   });

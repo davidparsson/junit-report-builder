@@ -62,6 +62,11 @@ Please refer to the [e2e_spec.coffee](spec/e2e_spec.coffee) for more details on 
 
 ## Changelog
 
+### 3.2.0
+
+-   Support name and test count attributes for the root test suites element. Thanks to [Simeon Cheeseman](https://github.com/SimeonC).
+-   Describe parameter types and return types with JSDoc. Thanks to [Simeon Cheeseman](https://github.com/SimeonC).
+
 ### 3.1.0
 
 -   Add support for generic properties for test cases. Thanks to [Pietro Ferrulli](https://github.com/Pi-fe).
