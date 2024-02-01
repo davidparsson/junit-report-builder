@@ -23,7 +23,7 @@ class TestSuites extends TestGroup {
    * @protected
    * @returns {import('xmlbuilder').XMLElement}
    */
-  createNode() {
+  createElement() {
     const node = xmlBuilder.create('testsuites', { encoding: 'UTF-8', invalidCharReplacement: '' });
     Object.keys(this._attributes).forEach((key) => {
       node.att(key, this._attributes[key]);

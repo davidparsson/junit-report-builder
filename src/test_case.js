@@ -161,7 +161,7 @@ class TestCase extends TestNode {
    * @param {import('xmlbuilder').XMLElement} parentElement
    */
   build(parentElement) {
-    const testCaseElement = this.buildNode(this.createNode(parentElement));
+    const testCaseElement = this.buildNode(this.createElement(parentElement));
     if (this._failure) {
       var failureElement = testCaseElement.ele('failure', this._failureAttributes);
       if (this._stacktrace) {

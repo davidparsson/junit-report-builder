@@ -49,7 +49,7 @@ class TestNode {
    * @param {import('xmlbuilder').XMLElement} parentElement
    * @returns {import('xmlbuilder').XMLElement}
    */
-  createNode(parentElement) {
+  createElement(parentElement) {
     return parentElement.ele(this._elementName, this._attributes);
   }
 
@@ -103,7 +103,7 @@ class TestNode {
    * @param {import('xmlbuilder').XMLElement} parentElement
    */
   build(parentElement) {
-    return this.buildNode(this.createNode(parentElement));
+    return this.buildNode(this.createElement(parentElement));
   }
 }
 
