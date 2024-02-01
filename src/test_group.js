@@ -61,7 +61,6 @@ class TestGroup extends TestNode {
    */
   _sumTestCaseCounts(counterFunction) {
     var counts = _.map(this._children, counterFunction);
-    // console.log('[debug]', counts, this._children);
     return _.sum(counts);
   }
 
