@@ -28,7 +28,7 @@ describe('JUnit Report builder', function () {
     return result.trim();
   };
 
-  const reportWith = (content, testSuitesProperties) => '<?xml version="1.0" encoding="UTF-8"?>\n' + content;
+  const reportWith = (content) => '<?xml version="1.0" encoding="UTF-8"?>\n' + content;
 
   it('should produce a report identical to the expected one', function () {
     builder.testCase().className('root.test.Class1');
