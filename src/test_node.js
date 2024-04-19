@@ -106,6 +106,29 @@ class TestNode {
 
   /**
    * @protected
+   * @param {Date} date
+   * @returns {string}
+   */
+  formatDate(date) {
+    const pad = (num) => (num < 10 ? '0' : '') + num;
+
+    return (
+      date.getFullYear() +
+      '-' +
+      pad(date.getMonth() + 1) +
+      '-' +
+      pad(date.getDate()) +
+      'T' +
+      pad(date.getHours()) +
+      ':' +
+      pad(date.getMinutes()) +
+      ':' +
+      pad(date.getSeconds())
+    );
+  }
+
+  /**
+   * @protected
    * @param {import('xmlbuilder').XMLElement} element
    * @returns {import('xmlbuilder').XMLElement}
    */

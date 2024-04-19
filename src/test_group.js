@@ -1,6 +1,5 @@
 // @ts-check
 var _ = require('lodash');
-var formatDate = require('date-format').asString;
 var { TestNode } = require('./test_node');
 
 class TestGroup extends TestNode {
@@ -20,7 +19,7 @@ class TestGroup extends TestNode {
    */
   timestamp(timestamp) {
     if (_.isDate(timestamp)) {
-      this._attributes.timestamp = formatDate('yyyy-MM-ddThh:mm:ss', timestamp);
+      this._attributes.timestamp = this.formatDate(timestamp);
     } else {
       this._attributes.timestamp = timestamp;
     }
