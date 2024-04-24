@@ -40,7 +40,6 @@ export class TestCase extends TestNode {
   /**
    * @param {string} filepath
    * @returns {TestCase}
-   * @chainable
    */
   file(filepath: string) {
     this._attributes.file = filepath;

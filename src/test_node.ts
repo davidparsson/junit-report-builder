@@ -20,7 +20,6 @@ export abstract class TestNode {
    * @param name
    * @param value
    * @returns this
-   * @chainable
    */
   property(name: string, value: string): this {
     this._properties.push({ name: name, value: value });
