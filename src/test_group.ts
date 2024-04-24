@@ -1,4 +1,3 @@
-// @ts-check
 import _ from 'lodash';
 import {TestNode} from './test_node';
 import type { TestCase } from './test_case';
