@@ -4,13 +4,14 @@ import fs from 'fs';
 import { TestSuites } from './test_suites';
 import { TestCase } from './test_case';
 import { TestSuite } from './test_suite';
+import { Factory } from './factory';
 
 export class JUnitReportBuilder {
   private _rootTestSuites: TestSuites;
   /**
    * @param factory
    */
-  constructor(private _factory: any) {
+  constructor(private _factory: Factory) {
     this._rootTestSuites = new TestSuites(_factory);
   }
 
