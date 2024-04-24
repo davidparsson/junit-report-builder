@@ -2,6 +2,8 @@ import path from 'path';
 import makeDir from 'make-dir';
 import fs from 'fs';
 import { TestSuites } from './test_suites';
+import { TestCase } from './test_case';
+import { TestSuite } from './test_suite';
 
 export class JUnitReportBuilder {
   private _rootTestSuites: TestSuites;
@@ -32,7 +34,7 @@ export class JUnitReportBuilder {
    * @param name
    * @returns this
    */
-  name(name: string) {
+  name(name: string): this {
     this._rootTestSuites.name(name);
     return this;
   }
@@ -40,21 +42,21 @@ export class JUnitReportBuilder {
   /**
    * @returns a test suite
    */
-  testSuite() {
+  testSuite(): TestSuite {
     return this._rootTestSuites.testSuite();
   }
 
   /**
-   * @returns {import('./test_case').TestCase}
+   * @returns a test case
    */
-  testCase() {
+  testCase(): TestCase {
     return this._rootTestSuites.testCase();
   }
 
   /**
    * @returns this
    */
-  newBuilder() {
+  newBuilder(): this {
     return this._factory.newBuilder();
   }
 }
