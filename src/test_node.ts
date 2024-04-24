@@ -7,7 +7,6 @@ export abstract class TestNode {
   private _properties: any[];
 
   /**
-   * @param factory - the factory that created this node
    * @param elementName - the name of the XML element
    */
   constructor(elementName: string) {
