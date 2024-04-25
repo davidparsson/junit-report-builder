@@ -55,9 +55,9 @@ export class JUnitReportBuilder {
   }
 
   /**
-   * @returns this
+   * @returns a new builder
    */
-  newBuilder(): this {
+  newBuilder(): JUnitReportBuilder {
     return this._factory.newBuilder();
   }
 }
