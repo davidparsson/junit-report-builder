@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import {TestNode} from './test_node';
+import { TestNode } from './test_node';
 import type { TestCase } from './test_case';
 import type { XMLElement } from 'xmlbuilder';
 import type { Factory } from './factory';
@@ -12,7 +12,10 @@ export class TestGroup extends TestNode {
    * @param factory
    * @param elementName
    */
-  constructor(protected _factory: Factory, elementName: string) {
+  constructor(
+    protected _factory: Factory,
+    elementName: string,
+  ) {
     super(elementName);
     this._children = [];
   }

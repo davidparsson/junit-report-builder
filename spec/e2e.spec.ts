@@ -1,4 +1,4 @@
-import builderPackage, {type Builder} from "../lib";
+import builderPackage, { type Builder } from '../lib';
 //@ts-ignore
 import rmdir from 'rimraf';
 import fs from 'fs';

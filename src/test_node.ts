@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import xmlBuilder, {type XMLElement} from  'xmlbuilder';
+import xmlBuilder, { type XMLElement } from 'xmlbuilder';
 
 export abstract class TestNode {
   private _elementName: string;
@@ -61,7 +61,7 @@ export abstract class TestNode {
   /**
    * @returns the number of skipped test cases
    */
-  public abstract getSkippedCount(): number
+  public abstract getSkippedCount(): number;
 
   /**
    * @param parentElement - the parent element

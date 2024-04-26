@@ -2,7 +2,6 @@ import { TestGroup } from './test_group';
 import type { Factory } from './factory';
 
 export class TestSuites extends TestGroup {
-
   /**
    * @param factory
    */

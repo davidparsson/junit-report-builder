@@ -11,12 +11,13 @@ describe('Test Case builder', () => {
   let systemOutElement: XMLElement;
   let systemErrElement: XMLElement;
 
-  const createElementMock = () => ({
-    ele: jest.fn(), 
-    cdata: jest.fn(), 
-    att: jest.fn(), 
-    txt: jest.fn()
-  } as unknown as XMLElement);
+  const createElementMock = () =>
+    ({
+      ele: jest.fn(),
+      cdata: jest.fn(),
+      att: jest.fn(),
+      txt: jest.fn(),
+    }) as unknown as XMLElement;
 
   beforeEach(() => {
     testCase = new TestCase();

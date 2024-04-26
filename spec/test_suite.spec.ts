@@ -16,31 +16,31 @@ describe('Test Suite builder', () => {
       getFailureCount: jest.fn().mockReturnValue(0),
       getErrorCount: jest.fn().mockReturnValue(0),
       getSkippedCount: jest.fn().mockReturnValue(0),
-      getTestCaseCount: jest.fn().mockReturnValue(1)
+      getTestCaseCount: jest.fn().mockReturnValue(1),
     } as unknown as TestCase;
 
     const factory = {
-      newTestCase: jest.fn().mockReturnValue(testCase)
+      newTestCase: jest.fn().mockReturnValue(testCase),
     } as unknown as Factory;
 
     propertiesElement = { ele: jest.fn() } as unknown as XMLElement;
-    testSuiteElement = { 
+    testSuiteElement = {
       ele: jest.fn().mockImplementation((elementName: string) => {
         switch (elementName) {
           case 'properties':
             return propertiesElement;
         }
         throw new Error(`Unexpected element name: ${elementName}`);
-      })
+      }),
     } as unknown as XMLElement;
-    parentElement = { 
+    parentElement = {
       ele: jest.fn().mockImplementation((elementName: string) => {
         switch (elementName) {
           case 'testsuite':
             return testSuiteElement;
         }
         throw new Error(`Unexpected element name: ${elementName}`);
-      }) 
+      }),
     } as unknown as XMLElement;
     testSuite = new TestSuite(factory);
   });
