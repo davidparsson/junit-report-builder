@@ -62,6 +62,10 @@ Please refer to the [e2e_spec.coffee](spec/e2e_spec.coffee) for more details on 
 
 ## Changelog
 
+### 4.0.0
+
+-   Dropped support for node.js 14, 12, 10 and 8.
+
 ### 3.2.1
 
 -   Update documentation.
