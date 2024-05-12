@@ -1,13 +1,21 @@
-// @ts-check
-var _ = require('lodash');
-var { TestNode } = require('./test_node');
+import _ from 'lodash';
+import { TestNode } from './test_node';
+import type { XMLElement } from 'xmlbuilder';
 
-class TestCase extends TestNode {
-  /**
-   * @param {import('./factory').Factory} factory
-   */
-  constructor(factory) {
-    super(factory, 'testcase');
+export class TestCase extends TestNode {
+  private _error: boolean;
+  private _failure: boolean;
+  private _skipped: boolean;
+  private _standardOutput: string | undefined;
+  private _standardError: string | undefined;
+  private _stacktrace: string | undefined;
+  private _errorAttributes: any;
+  private _failureAttributes: any;
+  private _errorAttachment: string | undefined;
+  private _errorContent: string | undefined;
+
+  constructor() {
+    super('testcase');
     this._error = false;
     this._failure = false;
     this._skipped = false;
@@ -21,11 +29,10 @@ class TestCase extends TestNode {
   }
 
   /**
-   * @param {string} className
-   * @returns {TestCase}
-   * @chainable
+   * @param className
+   * @returns this
    */
-  className(className) {
+  className(className: string): this {
     this._attributes.classname = className;
     return this;
   }
@@ -33,20 +40,18 @@ class TestCase extends TestNode {
   /**
    * @param {string} filepath
    * @returns {TestCase}
-   * @chainable
    */
-  file(filepath) {
+  file(filepath: string) {
     this._attributes.file = filepath;
     return this;
   }
 
   /**
-   * @param {string} [message]
-   * @param {string} [type]
-   * @returns {TestCase}
-   * @chainable
+   * @param message
+   * @param type
+   * @returns this
    */
-  failure(message, type) {
+  failure(message?: string, type?: string): this {
     this._failure = true;
     if (message) {
       this._failureAttributes.message = message;
@@ -58,13 +63,12 @@ class TestCase extends TestNode {
   }
 
   /**
-   * @param {string} [message]
-   * @param {string} [type]
-   * @param {string} [content]
-   * @returns {TestCase}
-   * @chainable
+   * @param message
+   * @param type
+   * @param content
+   * @returns this
    */
-  error(message, type, content) {
+  error(message?: string, type?: string, content?: string): this {
     this._error = true;
     if (message) {
       this._errorAttributes.message = message;
@@ -79,88 +83,83 @@ class TestCase extends TestNode {
   }
 
   /**
-   * @param {string} [stacktrace]
-   * @returns {TestCase}
-   * @chainable
+   * @param stacktrace
+   * @returns this
    */
-  stacktrace(stacktrace) {
+  stacktrace(stacktrace?: string): this {
     this._failure = true;
     this._stacktrace = stacktrace;
     return this;
   }
 
   /**
-   * @returns {TestCase}
-   * @chainable
+   * @returns this
    */
-  skipped() {
+  skipped(): this {
     this._skipped = true;
     return this;
   }
 
   /**
-   * @param {string} [log]
-   * @returns {TestCase}
-   * @chainable
+   * @param log
+   * @returns this
    */
-  standardOutput(log) {
+  standardOutput(log?: string): this {
     this._standardOutput = log;
     return this;
   }
 
   /**
-   * @param {string} [log]
-   * @returns {TestCase}
-   * @chainable
+   * @param log
+   * @returns this
    */
-  standardError(log) {
+  standardError(log?: string): this {
     this._standardError = log;
     return this;
   }
 
   /**
-   * @returns {number}
+   * @inheritdoc
    */
-  getTestCaseCount() {
+  override getTestCaseCount(): number {
     return 1;
   }
 
   /**
-   * @returns {number}
+   * @inheritdoc
    */
-  getFailureCount() {
-    return Number(this._failure);
+  override getFailureCount(): number {
+    return this._failure ? 1 : 0;
   }
 
   /**
-   * @returns {number}
+   * @inheritdoc
    */
-  getErrorCount() {
-    return Number(this._error);
+  override getErrorCount(): number {
+    return this._error ? 1 : 0;
   }
 
   /**
-   * @returns {number}
+   * @inheritdoc
    */
-  getSkippedCount() {
-    return Number(this._skipped);
+  override getSkippedCount() {
+    return this._skipped ? 1 : 0;
   }
 
   /**
    *
-   * @param {string} path
-   * @returns {TestCase}
-   * @chainable
+   * @param path
+   * @returns this
    */
-  errorAttachment(path) {
+  errorAttachment(path: string): this {
     this._errorAttachment = path;
     return this;
   }
 
   /**
-   * @param {import('xmlbuilder').XMLElement} parentElement
+   * @param parentElement - the parent element
    */
-  build(parentElement) {
+  build(parentElement: XMLElement) {
     const testCaseElement = this.buildNode(this.createElement(parentElement));
     if (this._failure) {
       var failureElement = testCaseElement.ele('failure', this._failureAttributes);
@@ -191,5 +190,3 @@ class TestCase extends TestNode {
     return testCaseElement;
   }
 }
-
-module.exports = { TestCase: TestCase };

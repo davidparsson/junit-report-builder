@@ -1,3 +1,4 @@
-var { Factory } = require('./factory');
+import { Factory } from './factory';
 
-module.exports = new Factory().newBuilder();
+export default new Factory().newBuilder();
+export type { JUnitReportBuilder as Builder } from './builder';

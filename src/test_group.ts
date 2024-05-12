@@ -1,23 +1,30 @@
-// @ts-check
-var _ = require('lodash');
-var { TestNode } = require('./test_node');
+import _ from 'lodash';
+import { TestNode } from './test_node';
+import type { TestCase } from './test_case';
+import type { XMLElement } from 'xmlbuilder';
+import type { Factory } from './factory';
+import type { TestSuite } from './test_suite';
 
-class TestGroup extends TestNode {
+export class TestGroup extends TestNode {
+  protected _children: (TestCase | TestSuite)[];
+
   /**
-   * @param {import('./factory').Factory} factory
-   * @param {string} elementName
+   * @param factory
+   * @param elementName
    */
-  constructor(factory, elementName) {
-    super(factory, elementName);
+  constructor(
+    protected _factory: Factory,
+    elementName: string,
+  ) {
+    super(elementName);
     this._children = [];
   }
 
   /**
-   * @param {string|Date} timestamp
-   * @returns {TestGroup}
-   * @chainable
+   * @param timestamp
+   * @returns this
    */
-  timestamp(timestamp) {
+  timestamp(timestamp: string | Date): this {
     if (_.isDate(timestamp)) {
       this._attributes.timestamp = this.formatDate(timestamp);
     } else {
@@ -27,65 +34,64 @@ class TestGroup extends TestNode {
   }
 
   /**
-   * @returns {import('./test_case').TestCase}
+   * @returns the created test case
    */
-  testCase() {
+  testCase(): TestCase {
     var testCase = this._factory.newTestCase();
     this._children.push(testCase);
     return testCase;
   }
 
   /**
-   * @returns {number}
+   * @inheritdoc
    */
-  getTestCaseCount() {
-    return this._sumTestCaseCounts(function (testCase) {
+  override getTestCaseCount(): number {
+    return this._sumTestCaseCounts((testCase: TestCase | TestSuite) => {
       return testCase.getTestCaseCount();
     });
   }
 
   /**
-   * @returns {number}
+   * @inheritdoc
    */
-  getFailureCount() {
-    return this._sumTestCaseCounts(function (testCase) {
+  override getFailureCount(): number {
+    return this._sumTestCaseCounts((testCase: TestCase | TestSuite) => {
       return testCase.getFailureCount();
     });
   }
 
   /**
-   * @returns {number}
+   * @inheritdoc
    */
-  getErrorCount() {
-    return this._sumTestCaseCounts(function (testCase) {
+  override getErrorCount(): number {
+    return this._sumTestCaseCounts((testCase: TestCase | TestSuite) => {
       return testCase.getErrorCount();
     });
   }
 
   /**
-   * @returns {number}
+   * @inheritdoc
    */
-  getSkippedCount() {
-    return this._sumTestCaseCounts(function (testCase) {
+  override getSkippedCount(): number {
+    return this._sumTestCaseCounts((testCase: TestCase | TestSuite) => {
       return testCase.getSkippedCount();
     });
   }
 
   /**
-   * @protected
-   * @param {Function} counterFunction
-   * @returns {number}
+   * @param counterFunction - the function to count the test cases
+   * @returns the sum of the counts of the test cases
    */
-  _sumTestCaseCounts(counterFunction) {
-    var counts = _.map(this._children, counterFunction);
-    return _.sum(counts);
+  protected _sumTestCaseCounts(counterFunction: (testCase: TestCase | TestSuite) => number): number {
+    var counts = this._children.map(counterFunction);
+    return counts.reduce((sum, count) => sum + count, 0);
   }
 
   /**
-   * @param {import('xmlbuilder').XMLElement} [parentElement]
-   * @returns {import('xmlbuilder').XMLElement}
+   * @param parentElement - the parent element
+   * @returns the newly created element
    */
-  build(parentElement) {
+  build(parentElement?: XMLElement) {
     this._attributes.tests = this.getTestCaseCount();
     this._attributes.failures = this.getFailureCount();
     this._attributes.errors = this.getErrorCount();
@@ -94,17 +100,14 @@ class TestGroup extends TestNode {
   }
 
   /**
-   * @protected
-   * @param {import('xmlbuilder').XMLElement} element
-   * @returns {import('xmlbuilder').XMLElement}
+   * @param element
+   * @returns the built element
    */
-  buildNode(element) {
+  protected buildNode(element: XMLElement) {
     element = super.buildNode(element);
-    _.forEach(this._children, function (child) {
+    _.forEach(this._children, (child) => {
       child.build(element);
     });
     return element;
   }
 }
-
-module.exports = { TestGroup: TestGroup };

@@ -1,36 +1,34 @@
-var { Builder } = require('./builder');
-var { TestSuites } = require('./test_suites');
-var { TestSuite } = require('./test_suite');
-var { TestCase } = require('./test_case');
+import { JUnitReportBuilder } from './builder';
+import { TestSuites } from './test_suites';
+import { TestSuite } from './test_suite';
+import { TestCase } from './test_case';
 
-class Factory {
+export class Factory {
   /**
-   * @returns {import('./builder').Builder}
+   * @returns a newly created builder
    */
-  newBuilder() {
-    return new Builder(this);
+  newBuilder(): JUnitReportBuilder {
+    return new JUnitReportBuilder(this);
   }
 
   /**
-   * @returns {import('./test_suite').TestSuite}
+   * @returns a newly created test suite
    */
-  newTestSuite() {
+  newTestSuite(): TestSuite {
     return new TestSuite(this);
   }
 
   /**
-   * @returns {import('./test_case').TestCase}
+   * @returns a newly created test case
    */
-  newTestCase() {
-    return new TestCase(this);
+  newTestCase(): TestCase {
+    return new TestCase();
   }
 
   /**
-   * @returns {import('./test_suites').TestSuites}
+   * @returns a newly created test suites
    */
   newTestSuites() {
     return new TestSuites(this);
   }
 }
-
-module.exports = { Factory: Factory };

@@ -1,64 +1,63 @@
-// @ts-check
-var path = require('path');
-var makeDir = require('make-dir');
-var fs = require('fs');
-var { TestSuites } = require('./test_suites');
+import path from 'path';
+import makeDir from 'make-dir';
+import fs from 'fs';
+import { TestSuites } from './test_suites';
+import { TestCase } from './test_case';
+import { TestSuite } from './test_suite';
+import { Factory } from './factory';
 
-class JUnitReportBuilder {
+export class JUnitReportBuilder {
+  private _rootTestSuites: TestSuites;
   /**
-   * @param {import('./factory').Factory} factory
+   * @param factory
    */
-  constructor(factory) {
-    this._factory = factory;
-    this._rootTestSuites = new TestSuites(factory);
+  constructor(private _factory: Factory) {
+    this._rootTestSuites = new TestSuites(_factory);
   }
 
   /**
-   * @param {string} reportPath
+   * @param reportPath
    */
-  writeTo(reportPath) {
+  writeTo(reportPath: string) {
     makeDir.sync(path.dirname(reportPath));
     fs.writeFileSync(reportPath, this.build(), 'utf8');
   }
 
   /**
-   * @returns {string}
+   * @returns a string representation of the JUnit report
    */
-  build() {
+  build(): string {
     var xmlTree = this._rootTestSuites.build();
     return xmlTree.end({ pretty: true });
   }
 
   /**
-   * @param {string} name
-   * @returns {JUnitReportBuilder}
-   * @chainable
+   * @param name
+   * @returns this
    */
-  name(name) {
+  name(name: string): this {
     this._rootTestSuites.name(name);
     return this;
   }
 
   /**
-   * @returns {import('./test_suite').TestSuite}
+   * @returns a test suite
    */
-  testSuite() {
+  testSuite(): TestSuite {
     return this._rootTestSuites.testSuite();
   }
 
   /**
-   * @returns {import('./test_case').TestCase}
+   * @returns a test case
    */
-  testCase() {
+  testCase(): TestCase {
     return this._rootTestSuites.testCase();
   }
 
   /**
-   * @returns {JUnitReportBuilder}
+   * @returns a new builder
    */
-  newBuilder() {
+  newBuilder(): JUnitReportBuilder {
     return this._factory.newBuilder();
   }
 }
-
-module.exports = { Builder: JUnitReportBuilder };

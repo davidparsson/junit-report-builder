@@ -1,14 +1,11 @@
-// @ts-check
-var _ = require('lodash');
-var { TestGroup } = require('./test_group');
+import { TestGroup } from './test_group';
+import type { Factory } from './factory';
 
-class TestSuite extends TestGroup {
+export class TestSuite extends TestGroup {
   /**
-   * @param {import('./factory').Factory} factory
+   * @param factory
    */
-  constructor(factory) {
+  constructor(factory: Factory) {
     super(factory, 'testsuite');
   }
 }
-
-module.exports = { TestSuite: TestSuite };

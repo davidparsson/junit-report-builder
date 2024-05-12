@@ -1,12 +1,14 @@
-let builder = require('../' + require('../package').main.replace('.js', ''));
-const rmdir = require('rimraf');
-const fs = require('fs');
+import builderPackage, { type Builder } from '../lib';
+//@ts-ignore
+import rmdir from 'rimraf';
+import fs from 'fs';
 
-describe('JUnit Report builder', function () {
-  beforeEach(() => (builder = builder.newBuilder()));
+describe('JUnit Report builder', () => {
+  let builder: Builder;
+  beforeEach(() => (builder = builderPackage.newBuilder()));
 
   beforeAll((done) =>
-    rmdir('build/tmp/test_resources', function (error) {
+    rmdir('build/tmp/test_resources', (error: any) => {
       if (error) {
         throw new Error(error);
       }
@@ -14,23 +16,9 @@ describe('JUnit Report builder', function () {
     }),
   );
 
-  const parseProperties = (properties = {}) => {
-    let result = '';
-    ['tests', 'failures', 'errors', 'skipped'].forEach((key) => {
-      result += key + '="' + (properties[key] || 0) + '" ';
-    });
-    for (const key in properties) {
-      if (['tests', 'failures', 'errors', 'skipped'].includes(key)) {
-        continue;
-      }
-      result += key + '="' + properties[key] + '" ';
-    }
-    return result.trim();
-  };
+  const reportWith = (content: string) => '<?xml version="1.0" encoding="UTF-8"?>\n' + content;
 
-  const reportWith = (content) => '<?xml version="1.0" encoding="UTF-8"?>\n' + content;
-
-  it('should produce a report identical to the expected one', function () {
+  it('should produce a report identical to the expected one', () => {
     builder.testCase().className('root.test.Class1');
     const suite1 = builder.testSuite().name('first.Suite');
     suite1.testCase().name('Second test');
@@ -70,7 +58,7 @@ describe('JUnit Report builder', function () {
     );
   });
 
-  it('should produce an empty test suite when a test suite reported', function () {
+  it('should produce an empty test suite when a test suite reported', () => {
     builder.testSuite();
 
     expect(builder.build()).toBe(
@@ -83,7 +71,7 @@ describe('JUnit Report builder', function () {
     );
   });
 
-  it('should produce a root test case when reported', function () {
+  it('should produce a root test case when reported', () => {
     builder.testCase();
 
     expect(builder.build()).toBe(
@@ -96,7 +84,7 @@ describe('JUnit Report builder', function () {
     );
   });
 
-  it('should produce a root test case with failure when reported', function () {
+  it('should produce a root test case with failure when reported', () => {
     builder.testCase().failure('it failed');
 
     expect(builder.build()).toBe(
@@ -111,7 +99,7 @@ describe('JUnit Report builder', function () {
     );
   });
 
-  it('should produce a root test case with failure and type when reported', function () {
+  it('should produce a root test case with failure and type when reported', () => {
     builder.testCase().failure('it failed', 'the type');
 
     expect(builder.build()).toBe(
@@ -126,7 +114,7 @@ describe('JUnit Report builder', function () {
     );
   });
 
-  it('should produce a root test case with error when reported', function () {
+  it('should produce a root test case with error when reported', () => {
     builder.testCase().error('it errored');
 
     expect(builder.build()).toBe(
@@ -141,7 +129,7 @@ describe('JUnit Report builder', function () {
     );
   });
 
-  it('should produce a root test case with error, type and content when reported', function () {
+  it('should produce a root test case with error, type and content when reported', () => {
     builder.testCase().error('it errored', 'the type', 'the content');
 
     expect(builder.build()).toBe(
@@ -156,7 +144,7 @@ describe('JUnit Report builder', function () {
     );
   });
 
-  it('should produce a test suite with a test case when reported', function () {
+  it('should produce a test suite with a test case when reported', () => {
     builder.testSuite().testCase();
 
     expect(builder.build()).toBe(
@@ -171,7 +159,7 @@ describe('JUnit Report builder', function () {
     );
   });
 
-  it('should produce a test suite with a failed test case when reported', function () {
+  it('should produce a test suite with a failed test case when reported', () => {
     builder.testSuite().testCase().failure();
 
     expect(builder.build()).toBe(
@@ -188,7 +176,7 @@ describe('JUnit Report builder', function () {
     );
   });
 
-  it('should produce a test suite with an errored test case when reported', function () {
+  it('should produce a test suite with an errored test case when reported', () => {
     builder.testSuite().testCase().error();
 
     expect(builder.build()).toBe(
@@ -205,7 +193,7 @@ describe('JUnit Report builder', function () {
     );
   });
 
-  it('should produce a test suite with a skipped test case when reported', function () {
+  it('should produce a test suite with a skipped test case when reported', () => {
     builder.testSuite().testCase().skipped();
 
     expect(builder.build()).toBe(
@@ -222,7 +210,7 @@ describe('JUnit Report builder', function () {
     );
   });
 
-  it('should add the reported time to the test sute', function () {
+  it('should add the reported time to the test sute', () => {
     builder.testSuite().time(2.5);
 
     expect(builder.build()).toBe(
@@ -235,7 +223,7 @@ describe('JUnit Report builder', function () {
     );
   });
 
-  it('should add the reported timestamp to the test sute', function () {
+  it('should add the reported timestamp to the test sute', () => {
     builder.testSuite().timestamp(new Date(2015, 10, 22, 13, 37, 59, 123));
 
     expect(builder.build()).toBe(
@@ -248,7 +236,7 @@ describe('JUnit Report builder', function () {
     );
   });
 
-  it('should add the reported time to the test case', function () {
+  it('should add the reported time to the test case', () => {
     builder.testSuite().testCase().time(2.5);
 
     expect(builder.build()).toBe(
@@ -263,7 +251,7 @@ describe('JUnit Report builder', function () {
     );
   });
 
-  it('should print the reported standard output log to system-out', function () {
+  it('should print the reported standard output log to system-out', () => {
     builder.testSuite().testCase().standardOutput('This was written to stdout!');
 
     expect(builder.build()).toBe(
@@ -280,7 +268,7 @@ describe('JUnit Report builder', function () {
     );
   });
 
-  it('should print the reported standard error log to system-err', function () {
+  it('should print the reported standard error log to system-err', () => {
     builder.testSuite().testCase().standardError('This was written to stderr!');
 
     expect(builder.build()).toBe(
@@ -297,7 +285,7 @@ describe('JUnit Report builder', function () {
     );
   });
 
-  it('should print the reported attachment to system-err', function () {
+  it('should print the reported attachment to system-err', () => {
     builder
       .testSuite()
       .testCase()
@@ -321,10 +309,10 @@ describe('JUnit Report builder', function () {
     );
   });
 
-  it('should output test suites and test cases in the order reported', function () {
-    builder.testCase().name(1);
-    builder.testSuite().name(2);
-    builder.testCase().name(3);
+  it('should output test suites and test cases in the order reported', () => {
+    builder.testCase().name('1');
+    builder.testSuite().name('2');
+    builder.testCase().name('3');
 
     expect(builder.build()).toBe(
       reportWith(
@@ -338,7 +326,7 @@ describe('JUnit Report builder', function () {
     );
   });
 
-  it('should builder supports emojis in cdata tags', function () {
+  it('should builder supports emojis in cdata tags', () => {
     builder.testCase().standardOutput('Emoji: 🤦');
 
     expect(builder.build()).toBe(
@@ -353,7 +341,7 @@ describe('JUnit Report builder', function () {
     );
   });
 
-  it('should escape quotes', function () {
+  it('should escape quotes', () => {
     builder.testCase().error('it is "quoted"');
 
     expect(builder.build()).toBe(
@@ -368,7 +356,7 @@ describe('JUnit Report builder', function () {
     );
   });
 
-  it('should remove invalid characters', function () {
+  it('should remove invalid characters', () => {
     builder.testCase().error('Invalid\x00Characters\x08Stripped');
 
     expect(builder.build()).toBe(

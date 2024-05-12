@@ -1,16 +1,17 @@
-// @ts-check
-var { TestGroup } = require('./test_group');
+import { TestGroup } from './test_group';
+import type { Factory } from './factory';
 
-class TestSuites extends TestGroup {
+export class TestSuites extends TestGroup {
   /**
-   * @param {import('./factory').Factory} factory
+   * @param factory
    */
-  constructor(factory) {
+  constructor(factory: Factory) {
     super(factory, 'testsuites');
+    this._children = [];
   }
 
   /**
-   * @returns {import('./test_suite').TestSuite}
+   * @returns a new created test suite
    */
   testSuite() {
     var suite = this._factory.newTestSuite();
@@ -18,5 +19,3 @@ class TestSuites extends TestGroup {
     return suite;
   }
 }
-
-module.exports = { TestSuites: TestSuites };
