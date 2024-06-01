@@ -7,7 +7,6 @@ export class TestSuites extends TestGroup {
    */
   constructor(factory: Factory) {
     super(factory, 'testsuites');
-    this._children = [];
   }
 
   /**
