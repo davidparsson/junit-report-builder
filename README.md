@@ -62,6 +62,10 @@ Please refer to the [e2e_spec.coffee](spec/e2e_spec.coffee) for more details on 
 
 ## Changelog
 
+### 4.1.0
+
+-   Full typing support for TypeScript. Thanks to [Harel M](https://github.com/HarelM).
+
 ### 4.0.0
 
 -   Dropped support for node.js 14, 12, 10 and 8.
