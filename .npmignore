@@ -3,4 +3,3 @@ spec/
 .gitignore
 .travis.yml
 .editorconfig
-gruntfile.js

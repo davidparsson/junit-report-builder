@@ -1,91 +1,80 @@
-// @ts-check
-var _ = require('lodash');
-var xmlBuilder = require('xmlbuilder');
+import _ from 'lodash';
+import xmlBuilder, { type XMLElement } from 'xmlbuilder';
 
-class TestNode {
+export abstract class TestNode {
+  private _elementName: string;
+  protected _attributes: any;
+  private _properties: any[];
+
   /**
-   * @param {import('./factory').Factory} factory
-   * @param {string} elementName
+   * @param elementName - the name of the XML element
    */
-  constructor(factory, elementName) {
-    this._factory = factory;
+  constructor(elementName: string) {
     this._elementName = elementName;
     this._attributes = {};
     this._properties = [];
   }
 
   /**
-   * @param {string} name
-   * @param {string} value
-   * @returns {TestNode}
-   * @chainable
+   * @param name
+   * @param value
+   * @returns this
    */
-  property(name, value) {
+  property(name: string, value: string): this {
     this._properties.push({ name: name, value: value });
     return this;
   }
 
   /**
-   * @param {string} name
-   * @returns {TestNode}
-   * @chainable
+   * @param name
+   * @returns this
    */
-  name(name) {
+  name(name: string): this {
     this._attributes.name = name;
     return this;
   }
 
   /**
-   * @param {string} timeInSeconds
-   * @returns {TestNode}
-   * @chainable
+   * @param timeInSeconds
+   * @returns this
    */
-  time(timeInSeconds) {
+  time(timeInSeconds: number): this {
     this._attributes.time = timeInSeconds;
     return this;
   }
 
   /**
-   * @returns {number}
+   * @returns the number of test cases
    */
-  getTestCaseCount() {
-    throw new Error('Not implemented');
-  }
+  public abstract getTestCaseCount(): number;
 
   /**
-   * @returns {number}
+   * @returns the number of failed test cases
    */
-  getFailureCount() {
-    throw new Error('Not implemented');
-  }
+  public abstract getFailureCount(): number;
 
   /**
-   * @returns {number}
+   * @returns the number of errored test cases
    */
-  getErrorCount() {
-    throw new Error('Not implemented');
-  }
+  public abstract getErrorCount(): number;
 
   /**
-   * @returns {number}
+   * @returns the number of skipped test cases
    */
-  getSkippedCount() {
-    throw new Error('Not implemented');
-  }
+  public abstract getSkippedCount(): number;
 
   /**
-   * @param {import('xmlbuilder').XMLElement} [parentElement]
+   * @param parentElement - the parent element
    */
-  build(parentElement) {
+  build(parentElement?: XMLElement) {
     return this.buildNode(this.createElement(parentElement));
   }
 
   /**
-   * @protected
-   * @param {import('xmlbuilder').XMLElement} [parentElement]
-   * @returns {import('xmlbuilder').XMLElement}
+   * @param parentElement - the parent element
+   * @returns the created element
    */
-  createElement(parentElement) {
+  protected createElement(parentElement?: XMLElement): XMLElement {
     if (parentElement) {
       return parentElement.ele(this._elementName, this._attributes);
     }
@@ -93,10 +82,9 @@ class TestNode {
   }
 
   /**
-   * @private
-   * @returns {import('xmlbuilder').XMLElement}
+   * @returns the created root element
    */
-  createRootElement() {
+  private createRootElement(): XMLElement {
     const element = xmlBuilder.create(this._elementName, { encoding: 'UTF-8', invalidCharReplacement: '' });
     Object.keys(this._attributes).forEach((key) => {
       element.att(key, this._attributes[key]);
@@ -106,11 +94,11 @@ class TestNode {
 
   /**
    * @protected
-   * @param {Date} date
+   * @param date
    * @returns {string}
    */
-  formatDate(date) {
-    const pad = (num) => (num < 10 ? '0' : '') + num;
+  protected formatDate(date: Date) {
+    const pad = (num: number) => (num < 10 ? '0' : '') + num;
 
     return (
       date.getFullYear() +
@@ -128,11 +116,10 @@ class TestNode {
   }
 
   /**
-   * @protected
-   * @param {import('xmlbuilder').XMLElement} element
-   * @returns {import('xmlbuilder').XMLElement}
+   * @param element
+   * @returns the created element
    */
-  buildNode(element) {
+  protected buildNode(element: XMLElement): XMLElement {
     if (this._properties.length) {
       var propertiesElement = element.ele('properties');
       _.forEach(this._properties, function (property) {
@@ -145,5 +132,3 @@ class TestNode {
     return element;
   }
 }
-
-module.exports = { TestNode: TestNode };
