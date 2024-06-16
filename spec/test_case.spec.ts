@@ -7,6 +7,7 @@ describe('Test Case builder', () => {
   let propertiesElement: XMLElement;
   let testCaseElement: XMLElement;
   let failureElement: XMLElement;
+  let errorElement: XMLElement;
   let skippedElement: XMLElement;
   let systemOutElement: XMLElement;
   let systemErrElement: XMLElement;
@@ -24,6 +25,7 @@ describe('Test Case builder', () => {
     parentElement = createElementMock();
     testCaseElement = createElementMock();
     failureElement = createElementMock();
+    errorElement = createElementMock();
     skippedElement = createElementMock();
     systemOutElement = createElementMock();
     systemErrElement = createElementMock();
@@ -50,7 +52,7 @@ describe('Test Case builder', () => {
         case 'properties':
           return propertiesElement;
         case 'error':
-          return createElementMock();
+          return errorElement;
       }
       throw new Error(`Unexpected element name: ${elementName}`);
     });
@@ -143,6 +145,17 @@ describe('Test Case builder', () => {
     });
   });
 
+  it('should add a failure node with message and type when test failed', () => {
+    testCase.failure('Failure message', 'Failure type');
+
+    testCase.build(parentElement);
+
+    expect(testCaseElement.ele).toHaveBeenCalledWith('failure', {
+      message: 'Failure message',
+      type: 'Failure type',
+    });
+  });
+
   it('should add the stactrace to the failure node when stacktrace provided', () => {
     testCase.stacktrace('This is a stacktrace');
 
@@ -195,6 +208,29 @@ describe('Test Case builder', () => {
     expect(testCaseElement.ele).toHaveBeenCalledWith('error', {
       message: 'Error message',
     });
+  });
+
+  it('should add a error node with message and type when test errored', () => {
+    testCase.error('Error message', 'Error type');
+
+    testCase.build(parentElement);
+
+    expect(testCaseElement.ele).toHaveBeenCalledWith('error', {
+      message: 'Error message',
+      type: 'Error type',
+    });
+  });
+
+  it('should add a error node with message, type and content when test errored', () => {
+    testCase.error('Error message', 'Error type', 'Error content');
+
+    testCase.build(parentElement);
+
+    expect(testCaseElement.ele).toHaveBeenCalledWith('error', {
+      message: 'Error message',
+      type: 'Error type',
+    });
+    expect(errorElement.cdata).toHaveBeenCalledWith('Error content');
   });
 
   describe('system-out', () => {
@@ -309,5 +345,9 @@ describe('Test Case builder', () => {
 
       expect(testCase.getSkippedCount()).toBe(1);
     });
+  });
+
+  describe('test case counting', () => {
+    it('should be 1 for a test case', () => expect(testCase.getTestCaseCount()).toBe(1));
   });
 });
