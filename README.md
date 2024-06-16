@@ -54,7 +54,7 @@ builder instance like this:
 builder = builder.newBuilder();
 ```
 
-Please refer to the [e2e_spec.coffee](spec/e2e_spec.coffee) for more details on the usage.
+Please refer to the [e2e.spec.ts](spec/e2e.spec.ts) for more details on the usage.
 
 ## License
 
