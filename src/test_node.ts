@@ -122,7 +122,7 @@ export abstract class TestNode {
   protected buildNode(element: XMLElement): XMLElement {
     if (this._properties.length) {
       var propertiesElement = element.ele('properties');
-      _.forEach(this._properties, function (property) {
+      _.forEach(this._properties, (property: any) => {
         propertiesElement.ele('property', {
           name: property.name,
           value: property.value,
