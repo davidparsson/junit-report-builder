@@ -62,13 +62,10 @@ Please refer to the [e2e.spec.ts](spec/e2e.spec.ts) for more details on the usag
 
 ## Changelog
 
-### 4.1.0
-
--   Full typing support for TypeScript. Thanks to [Harel M](https://github.com/HarelM).
-
 ### 4.0.0
 
 -   Dropped support for node.js 14, 12, 10 and 8.
+-   Full typing support for TypeScript. Thanks to [Harel M](https://github.com/HarelM).
 
 ### 3.2.1
 
