@@ -59,6 +59,7 @@
     },
     "hooks": {
       "before:init": [
+        "npm run build",
         "npm test",
         "npm run check"
       ]
