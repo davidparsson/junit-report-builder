@@ -1,9 +1,8 @@
-import _ from 'lodash';
-import { TestNode } from './test_node';
-import type { TestCase } from './test_case';
+import { TestNode } from './test_node.js';
 import type { XMLElement } from 'xmlbuilder';
-import type { Factory } from './factory';
-import type { TestSuite } from './test_suite';
+import type { TestCase } from './test_case.js';
+import type { Factory } from './factory.js';
+import type { TestSuite } from './test_suite.js';
 
 export class TestGroup extends TestNode {
   protected _children: (TestCase | TestSuite)[];
@@ -25,11 +24,7 @@ export class TestGroup extends TestNode {
    * @returns this
    */
   timestamp(timestamp: string | Date): this {
-    if (_.isDate(timestamp)) {
-      this._attributes.timestamp = this.formatDate(timestamp);
-    } else {
-      this._attributes.timestamp = timestamp;
-    }
+    this._attributes.timestamp = timestamp instanceof Date ? this.formatDate(timestamp) : timestamp;
     return this;
   }
 
@@ -37,7 +32,7 @@ export class TestGroup extends TestNode {
    * @returns the created test case
    */
   testCase(): TestCase {
-    var testCase = this._factory.newTestCase();
+    const testCase = this._factory.newTestCase();
     this._children.push(testCase);
     return testCase;
   }
@@ -83,7 +78,7 @@ export class TestGroup extends TestNode {
    * @returns the sum of the counts of the test cases
    */
   protected _sumTestCaseCounts(counterFunction: (testCase: TestCase | TestSuite) => number): number {
-    var counts = this._children.map(counterFunction);
+    const counts = this._children.map(counterFunction);
     return counts.reduce((sum, count) => sum + count, 0);
   }
 
@@ -105,7 +100,7 @@ export class TestGroup extends TestNode {
    */
   protected buildNode(element: XMLElement) {
     element = super.buildNode(element);
-    _.forEach(this._children, (child) => {
+    this._children.forEach((child) => {
       child.build(element);
     });
     return element;

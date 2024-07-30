@@ -1,5 +1,5 @@
-import { TestGroup } from './test_group';
-import type { Factory } from './factory';
+import { TestGroup } from './test_group.js';
+import type { Factory } from './factory.js';
 
 export class TestSuites extends TestGroup {
   /**
@@ -13,7 +13,7 @@ export class TestSuites extends TestGroup {
    * @returns a new created test suite
    */
   testSuite() {
-    var suite = this._factory.newTestSuite();
+    const suite = this._factory.newTestSuite();
     this._children.push(suite);
     return suite;
   }

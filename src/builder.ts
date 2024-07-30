@@ -1,10 +1,9 @@
-import path from 'path';
-import makeDir from 'make-dir';
-import fs from 'fs';
-import { TestSuites } from './test_suites';
-import { TestCase } from './test_case';
-import { TestSuite } from './test_suite';
-import { Factory } from './factory';
+import * as path from 'path';
+import * as fs from 'fs';
+import { TestSuites } from './test_suites.js';
+import { TestCase } from './test_case.js';
+import { TestSuite } from './test_suite.js';
+import { Factory } from './factory.js';
 
 export class JUnitReportBuilder {
   private _rootTestSuites: TestSuites;
@@ -19,7 +18,7 @@ export class JUnitReportBuilder {
    * @param reportPath
    */
   writeTo(reportPath: string) {
-    makeDir.sync(path.dirname(reportPath));
+    fs.mkdirSync(path.dirname(reportPath), { recursive: true });
     fs.writeFileSync(reportPath, this.build(), 'utf8');
   }
 
@@ -27,7 +26,7 @@ export class JUnitReportBuilder {
    * @returns a string representation of the JUnit report
    */
   build(): string {
-    var xmlTree = this._rootTestSuites.build();
+    const xmlTree = this._rootTestSuites.build();
     return xmlTree.end({ pretty: true });
   }
 

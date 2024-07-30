@@ -1,19 +1,24 @@
-import builderPackage, { type Builder } from '../lib';
+import builderPackage, { type Builder } from '../lib/index.js';
 //@ts-ignore
 import rmdir from 'rimraf';
-import fs from 'fs';
+import * as fs from 'fs';
 
 describe('JUnit Report builder', () => {
   let builder: Builder;
-  beforeEach(() => (builder = builderPackage.newBuilder()));
+  beforeEach(() => {
+    builder = builderPackage.newBuilder();
+  });
 
-  beforeAll((done) =>
-    rmdir('build/tmp/test_resources', (error: any) => {
-      if (error) {
-        throw new Error(error);
-      }
-      done();
-    }),
+  beforeAll(
+    async () =>
+      new Promise((done) =>
+        rmdir('build/tmp/test_resources', (error: any) => {
+          if (error) {
+            throw new Error(error);
+          }
+          done();
+        }),
+      ),
   );
 
   const reportWith = (content: string) => '<?xml version="1.0" encoding="UTF-8"?>\n' + content;

@@ -1,7 +1,8 @@
 import { XMLElement } from 'xmlbuilder';
-import { Factory } from '../src/factory';
-import { TestSuite } from '../src/test_suite';
-import { TestCase } from '../src/test_case';
+import { Factory } from '../src/factory.js';
+import { TestSuite } from '../src/test_suite.js';
+import { TestCase } from '../src/test_case.js';
+import { getSpy } from './type_utils.js';
 
 describe('Test Suite builder', () => {
   let testSuite: TestSuite;
@@ -12,20 +13,20 @@ describe('Test Suite builder', () => {
 
   beforeEach(() => {
     testCase = {
-      build: jest.fn(),
-      getFailureCount: jest.fn().mockReturnValue(0),
-      getErrorCount: jest.fn().mockReturnValue(0),
-      getSkippedCount: jest.fn().mockReturnValue(0),
-      getTestCaseCount: jest.fn().mockReturnValue(1),
+      build: vi.fn(),
+      getFailureCount: vi.fn().mockReturnValue(0),
+      getErrorCount: vi.fn().mockReturnValue(0),
+      getSkippedCount: vi.fn().mockReturnValue(0),
+      getTestCaseCount: vi.fn().mockReturnValue(1),
     } as unknown as TestCase;
 
     const factory = {
-      newTestCase: jest.fn().mockReturnValue(testCase),
+      newTestCase: vi.fn().mockReturnValue(testCase),
     } as unknown as Factory;
 
-    propertiesElement = { ele: jest.fn() } as unknown as XMLElement;
+    propertiesElement = { ele: vi.fn() } as unknown as XMLElement;
     testSuiteElement = {
-      ele: jest.fn().mockImplementation((elementName: string) => {
+      ele: vi.fn().mockImplementation((elementName: string) => {
         switch (elementName) {
           case 'properties':
             return propertiesElement;
@@ -34,7 +35,7 @@ describe('Test Suite builder', () => {
       }),
     } as unknown as XMLElement;
     parentElement = {
-      ele: jest.fn().mockImplementation((elementName: string) => {
+      ele: vi.fn().mockImplementation((elementName: string) => {
         switch (elementName) {
           case 'testsuite':
             return testSuiteElement;
@@ -162,7 +163,7 @@ describe('Test Suite builder', () => {
 
     testSuite.build(parentElement);
 
-    const spy: jest.SpyInstance = testCase.build as any;
+    const spy = getSpy(testCase.build);
     expect(spy).toHaveBeenCalledTimes(2);
     expect(spy.mock.calls[0][0]).toEqual(testSuiteElement);
     expect(spy.mock.calls[1][0]).toEqual(testSuiteElement);
@@ -201,7 +202,7 @@ describe('Test Suite builder', () => {
     });
 
     it('should report two failures when two test cases failed', () => {
-      (testCase.getFailureCount as any as jest.SpyInstance).mockReturnValue(1);
+      getSpy(testCase.getFailureCount).mockReturnValue(1);
 
       testSuite.testCase();
       testSuite.testCase();
@@ -244,7 +245,7 @@ describe('Test Suite builder', () => {
     });
 
     it('should report two errors when two test cases errored', () => {
-      (testCase.getErrorCount as any as jest.SpyInstance).mockReturnValue(1);
+      getSpy(testCase.getErrorCount).mockReturnValue(1);
 
       testSuite.testCase();
       testSuite.testCase();
@@ -287,7 +288,7 @@ describe('Test Suite builder', () => {
     });
 
     it('should report two skipped when two test cases errored', () => {
-      (testCase.getSkippedCount as any as jest.SpyInstance).mockReturnValue(1);
+      getSpy(testCase.getSkippedCount).mockReturnValue(1);
 
       testSuite.testCase();
       testSuite.testCase();

@@ -1,5 +1,6 @@
+import { VitestUtils } from 'vitest';
 import { XMLElement } from 'xmlbuilder';
-import { TestCase } from '../src/test_case';
+import { TestCase } from '../src/test_case.js';
 
 describe('Test Case builder', () => {
   let testCase: TestCase;
@@ -14,10 +15,10 @@ describe('Test Case builder', () => {
 
   const createElementMock = () =>
     ({
-      ele: jest.fn(),
-      cdata: jest.fn(),
-      att: jest.fn(),
-      txt: jest.fn(),
+      ele: vi.fn(),
+      cdata: vi.fn(),
+      att: vi.fn(),
+      txt: vi.fn(),
     }) as unknown as XMLElement;
 
   beforeEach(() => {
@@ -31,7 +32,7 @@ describe('Test Case builder', () => {
     systemErrElement = createElementMock();
     propertiesElement = createElementMock();
 
-    (parentElement.ele as any as jest.SpyInstance).mockImplementation((elementName: string) => {
+    (parentElement.ele as any as ReturnType<VitestUtils['fn']>).mockImplementation((elementName: string) => {
       switch (elementName) {
         case 'testcase':
           return testCaseElement;
@@ -39,7 +40,7 @@ describe('Test Case builder', () => {
       throw new Error(`Unexpected element name: ${elementName}`);
     });
 
-    (testCaseElement.ele as any as jest.SpyInstance).mockImplementation((elementName: string) => {
+    (testCaseElement.ele as any as ReturnType<VitestUtils['fn']>).mockImplementation((elementName: string) => {
       switch (elementName) {
         case 'failure':
           return failureElement;
@@ -57,7 +58,7 @@ describe('Test Case builder', () => {
       throw new Error(`Unexpected element name: ${elementName}`);
     });
 
-    (systemErrElement.cdata as any as jest.SpyInstance).mockImplementation((stdError: string) => {
+    (systemErrElement.cdata as any as ReturnType<VitestUtils['fn']>).mockImplementation((stdError: string) => {
       switch (stdError) {
         case 'Error with screenshot':
           return systemErrElement;

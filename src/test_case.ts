@@ -1,5 +1,4 @@
-import _ from 'lodash';
-import { TestNode } from './test_node';
+import { TestNode } from './test_node.js';
 import type { XMLElement } from 'xmlbuilder';
 
 export class TestCase extends TestNode {
@@ -162,13 +161,13 @@ export class TestCase extends TestNode {
   build(parentElement: XMLElement) {
     const testCaseElement = this.buildNode(this.createElement(parentElement));
     if (this._failure) {
-      var failureElement = testCaseElement.ele('failure', this._failureAttributes);
+      const failureElement = testCaseElement.ele('failure', this._failureAttributes);
       if (this._stacktrace) {
         failureElement.cdata(this._stacktrace);
       }
     }
     if (this._error) {
-      var errorElement = testCaseElement.ele('error', this._errorAttributes);
+      const errorElement = testCaseElement.ele('error', this._errorAttributes);
       if (this._errorContent) {
         errorElement.cdata(this._errorContent);
       }
@@ -179,7 +178,7 @@ export class TestCase extends TestNode {
     if (this._standardOutput) {
       testCaseElement.ele('system-out').cdata(this._standardOutput);
     }
-    var systemError;
+    let systemError;
     if (this._standardError) {
       systemError = testCaseElement.ele('system-err').cdata(this._standardError);
 

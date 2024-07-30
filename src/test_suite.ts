@@ -1,5 +1,5 @@
-import { TestGroup } from './test_group';
-import type { Factory } from './factory';
+import { TestGroup } from './test_group.js';
+import type { Factory } from './factory.js';
 
 export class TestSuite extends TestGroup {
   /**

@@ -1,7 +1,7 @@
-import { JUnitReportBuilder } from './builder';
-import { TestSuites } from './test_suites';
-import { TestSuite } from './test_suite';
-import { TestCase } from './test_case';
+import { JUnitReportBuilder } from './builder.js';
+import { TestSuites } from './test_suites.js';
+import { TestSuite } from './test_suite.js';
+import { TestCase } from './test_case.js';
 
 export class Factory {
   /**

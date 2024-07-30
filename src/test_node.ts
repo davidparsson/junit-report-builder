@@ -1,10 +1,9 @@
-import _ from 'lodash';
-import xmlBuilder, { type XMLElement } from 'xmlbuilder';
+import * as xmlBuilder from 'xmlbuilder';
 
 export abstract class TestNode {
   private _elementName: string;
   protected _attributes: any;
-  private _properties: any[];
+  private _properties: { name: string; value: string }[];
 
   /**
    * @param elementName - the name of the XML element
@@ -21,7 +20,7 @@ export abstract class TestNode {
    * @returns this
    */
   property(name: string, value: string): this {
-    this._properties.push({ name: name, value: value });
+    this._properties.push({ name, value });
     return this;
   }
 
@@ -66,7 +65,7 @@ export abstract class TestNode {
   /**
    * @param parentElement - the parent element
    */
-  build(parentElement?: XMLElement) {
+  build(parentElement?: xmlBuilder.XMLElement) {
     return this.buildNode(this.createElement(parentElement));
   }
 
@@ -74,7 +73,7 @@ export abstract class TestNode {
    * @param parentElement - the parent element
    * @returns the created element
    */
-  protected createElement(parentElement?: XMLElement): XMLElement {
+  protected createElement(parentElement?: xmlBuilder.XMLElement): xmlBuilder.XMLElement {
     if (parentElement) {
       return parentElement.ele(this._elementName, this._attributes);
     }
@@ -84,7 +83,7 @@ export abstract class TestNode {
   /**
    * @returns the created root element
    */
-  private createRootElement(): XMLElement {
+  private createRootElement(): xmlBuilder.XMLElement {
     const element = xmlBuilder.create(this._elementName, { encoding: 'UTF-8', invalidCharReplacement: '' });
     Object.keys(this._attributes).forEach((key) => {
       element.att(key, this._attributes[key]);
@@ -119,10 +118,10 @@ export abstract class TestNode {
    * @param element
    * @returns the created element
    */
-  protected buildNode(element: XMLElement): XMLElement {
+  protected buildNode(element: xmlBuilder.XMLElement): xmlBuilder.XMLElement {
     if (this._properties.length) {
-      var propertiesElement = element.ele('properties');
-      _.forEach(this._properties, (property: any) => {
+      const propertiesElement = element.ele('properties');
+      this._properties.forEach((property) => {
         propertiesElement.ele('property', {
           name: property.name,
           value: property.value,
