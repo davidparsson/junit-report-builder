@@ -1,4 +1,4 @@
-import builderPackage, { type Builder } from '../lib';
+import builderPackage, { type Builder, TestSuite } from '../dist';
 //@ts-ignore
 import rmdir from 'rimraf';
 import fs from 'fs';
@@ -20,7 +20,7 @@ describe('JUnit Report builder', () => {
 
   it('should produce a report identical to the expected one', () => {
     builder.testCase().className('root.test.Class1');
-    const suite1 = builder.testSuite().name('first.Suite');
+    const suite1: TestSuite = builder.testSuite().name('first.Suite');
     suite1.testCase().name('Second test');
     suite1
       .testCase()
