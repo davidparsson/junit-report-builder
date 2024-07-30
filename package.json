@@ -3,6 +3,7 @@
   "version": "4.0.0",
   "description": "Aimed at making it easier to build Jenkins compatible JUnit XML reports in plugins for testing frameworks",
   "main": "./dist/index.js",
+  "module": "./dist/index.es.js",
   "scripts": {
     "prepublish": "npm run build",
     "check": "prettier --check .",
