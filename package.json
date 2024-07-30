@@ -71,7 +71,7 @@
     }
   },
   "files": [
-    "./dist/*"    
+    "./dist/*"
   ],
   "typings": "./dist/index.d.ts"
 }
