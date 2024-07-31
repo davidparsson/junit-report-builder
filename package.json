@@ -1,6 +1,6 @@
 {
   "name": "junit-report-builder",
-  "version": "4.0.1-rc.0",
+  "version": "4.0.1",
   "description": "Aimed at making it easier to build Jenkins compatible JUnit XML reports in plugins for testing frameworks",
   "main": "./dist/index.js",
   "module": "./dist/index.es.js",
