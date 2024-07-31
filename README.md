@@ -20,12 +20,12 @@ import builder from 'junit-report-builder';
 let suite = builder.testSuite().name('My suite');
 
 // Create a test case
-let testCase = suite.testCase()
+let firstTestCase = suite.testCase()
   .className('my.test.Class')
   .name('My first test');
 
 // Create another test case which is marked as failed
-let testCase = suite.testCase()
+let secondTestCase = suite.testCase()
   .className('my.test.Class')
   .name('My second test')
   .failure();
@@ -51,7 +51,8 @@ If you want to create another report file, start by getting a new
 builder instance like this:
 
 ```JavaScript
-builder = builder.newBuilder();
+// Each builder produces a single report file
+let anotherBuilder = builder.newBuilder();
 ```
 
 Please refer to the [e2e.spec.ts](spec/e2e.spec.ts) for more details on the usage.
