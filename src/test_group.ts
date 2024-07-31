@@ -5,7 +5,7 @@ import type { XMLElement } from 'xmlbuilder';
 import type { Factory } from './factory';
 import type { TestSuite } from './test_suite';
 
-export class TestGroup extends TestNode {
+export abstract class TestGroup extends TestNode {
   protected _children: (TestCase | TestSuite)[];
 
   /**
