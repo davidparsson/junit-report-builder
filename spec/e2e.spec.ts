@@ -1,11 +1,11 @@
-import builderPackage, { type Builder, TestSuite } from '../dist';
+import defaultBuilder, { type Builder, TestSuite } from '../dist';
 //@ts-ignore
 import rmdir from 'rimraf';
 import fs from 'fs';
 
 describe('JUnit Report builder', () => {
   let builder: Builder;
-  beforeEach(() => (builder = builderPackage.newBuilder()));
+  beforeEach(() => (builder = defaultBuilder.newBuilder()));
 
   beforeAll((done) =>
     rmdir('build/tmp/test_resources', (error: any) => {
