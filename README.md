@@ -71,14 +71,14 @@ Please refer to the [e2e.spec.ts](spec/e2e.spec.ts) for more details on the usag
 
 ### 4.0.1
 
--   Re-introduce CommonJS support, while keeping the ES module support. Thanks to [Harel M](https://github.com/HarelM) and [Simeon Cheeseman](https://github.com/SimeonC).
--   Export all public types from the index module. Thanks to [Harel M](https://github.com/HarelM) and [Simeon Cheeseman](https://github.com/SimeonC).
+-   Re-introduce CommonJS support, while keeping the ES module support. Thanks to [Harel Mazor](https://github.com/HarelM) and [Simeon Cheeseman](https://github.com/SimeonC).
+-   Export all public types from the index module. Thanks to [Harel Mazor](https://github.com/HarelM) and [Simeon Cheeseman](https://github.com/SimeonC).
 
 ### 4.0.0
 
 -   _Accidentally dropped CommonJS support. This is fixed again in 4.0.1._
 -   Dropped support for node.js 14, 12, 10 and 8.
--   Full typing support for TypeScript. Thanks to [Harel M](https://github.com/HarelM).
+-   Full typing support for TypeScript. Thanks to [Harel Mazor](https://github.com/HarelM).
 
 ### 3.2.1
 
