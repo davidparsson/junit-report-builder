@@ -55,6 +55,12 @@ builder instance like this:
 let anotherBuilder = builder.newBuilder();
 ```
 
+CommonJS is also supported:
+
+```JavaScript
+let builder = require('junit-report-builder');
+```
+
 Please refer to the [e2e.spec.ts](spec/e2e.spec.ts) for more details on the usage.
 
 ## License
