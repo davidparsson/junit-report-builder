@@ -76,6 +76,7 @@ Please refer to the [e2e.spec.ts](spec/e2e.spec.ts) for more details on the usag
 
 ### 4.0.1
 
+-   _Accidentally broke CommonJS API in 4.0.1. Re-released as 5.0.0._
 -   Re-introduce CommonJS support, while keeping the ES module support. Thanks to [Harel Mazor](https://github.com/HarelM) and [Simeon Cheeseman](https://github.com/SimeonC).
 -   Export all public types from `index.d.ts`. Thanks to [Harel Mazor](https://github.com/HarelM) and [Simeon Cheeseman](https://github.com/SimeonC).
 -   Full typing support for TypeScript. Thanks to [Harel Mazor](https://github.com/HarelM).
