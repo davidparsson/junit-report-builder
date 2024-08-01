@@ -69,6 +69,10 @@ Please refer to the [e2e.spec.ts](spec/e2e.spec.ts) for more details on the usag
 
 ## Changelog
 
+### 5.0.0
+-   A re-release of 4.0.1 since that version broke the CommonJS API.
+-   Remove an internal type from the public API.
+
 ### 4.0.1
 
 -   Re-introduce CommonJS support, while keeping the ES module support. Thanks to [Harel Mazor](https://github.com/HarelM) and [Simeon Cheeseman](https://github.com/SimeonC).
