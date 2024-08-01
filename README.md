@@ -70,6 +70,7 @@ Please refer to the [e2e.spec.ts](spec/e2e.spec.ts) for more details on the usag
 ## Changelog
 
 ### 5.0.0
+
 -   A re-release of 4.0.1 since that version broke the CommonJS API.
 -   Remove an internal type from the public API.
 
