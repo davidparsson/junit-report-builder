@@ -3,4 +3,4 @@ build/
 dist/
 coverage/
 .nvmrc
-
+test-report.xml
