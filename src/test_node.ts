@@ -1,10 +1,20 @@
 import _ from 'lodash';
 import xmlBuilder, { type XMLElement } from 'xmlbuilder';
 
+/** Helper interface to describe one property */
+interface Property {
+  /** name of the property */
+  name: string;
+  /** value of the property */
+  value: string;
+  /** if true the property will be serialized as node with textcontent */
+  isPropertyWithTextContent: boolean;
+}
+
 export abstract class TestNode {
   private _elementName: string;
   protected _attributes: any;
-  private _properties: any[];
+  private _properties: Property[];
 
   /**
    * @param elementName - the name of the XML element
@@ -20,8 +30,8 @@ export abstract class TestNode {
    * @param value
    * @returns this
    */
-  property(name: string, value: string): this {
-    this._properties.push({ name: name, value: value });
+  property(name: string, value: string, isPropertyWithTextContent: boolean = false): this {
+    this._properties.push({ name: name, value: value, isPropertyWithTextContent: isPropertyWithTextContent });
     return this;
   }
 
@@ -122,11 +132,12 @@ export abstract class TestNode {
   protected buildNode(element: XMLElement): XMLElement {
     if (this._properties.length) {
       var propertiesElement = element.ele('properties');
-      _.forEach(this._properties, (property: any) => {
-        propertiesElement.ele('property', {
-          name: property.name,
-          value: property.value,
-        });
+      _.forEach(this._properties, (property: Property) => {
+        if (property.isPropertyWithTextContent) {
+          propertiesElement.ele('property', { name: property.name }, property.value);
+        } else {
+          propertiesElement.ele('property', { name: property.name, value: property.value });
+        }
       });
     }
     return element;

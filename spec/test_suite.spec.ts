@@ -132,6 +132,20 @@ describe('Test Suite builder', () => {
     });
   });
 
+  it('should add the provided property with textContent as element with textContent', () => {
+    testSuite.property('property name', 'property value', true);
+
+    testSuite.build(parentElement);
+
+    expect(propertiesElement.ele).toHaveBeenCalledWith(
+      'property',
+      {
+        name: 'property name',
+      },
+      'property value',
+    );
+  });
+
   it('should add all the provided properties as elements', () => {
     testSuite.property('name 1', 'value 1');
     testSuite.property('name 2', 'value 2');
