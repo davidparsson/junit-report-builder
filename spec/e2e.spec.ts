@@ -29,7 +29,7 @@ describe('JUnit Report builder', () => {
       .name('Third test')
       .file('./path-to/the-test-file.coffee')
       .property('property name', 'property value')
-      .property('property name 2', 'property value 2', true);
+      .textContentProperty('property name 2', 'property value 2');
 
     const suite2 = builder.testSuite().name('second.Suite');
     suite2.testCase().failure('Failure message');

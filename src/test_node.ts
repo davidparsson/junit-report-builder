@@ -30,8 +30,18 @@ export abstract class TestNode {
    * @param value
    * @returns this
    */
-  property(name: string, value: string, isPropertyWithTextContent: boolean = false): this {
-    this._properties.push({ name: name, value: value, isPropertyWithTextContent: isPropertyWithTextContent });
+  property(name: string, value: string): this {
+    this._properties.push({ name: name, value: value, isPropertyWithTextContent: false });
+    return this;
+  }
+
+  /**
+   * @param name
+   * @param value
+   * @returns this
+   */
+  textContentProperty(name: string, value: string): this {
+    this._properties.push({ name: name, value: value, isPropertyWithTextContent: true });
     return this;
   }
 
