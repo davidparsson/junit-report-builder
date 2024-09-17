@@ -40,3 +40,16 @@ jobs:
         run: |
           npm install
           npm run check
+
+  doctest:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 20.x
+      - name: npm install, run doctest
+        run: |
+          npm install
+          npm run doctest
