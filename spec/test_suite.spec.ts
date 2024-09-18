@@ -133,7 +133,7 @@ describe('Test Suite builder', () => {
   });
 
   it('should add the provided property with textContent as element with textContent', () => {
-    testSuite.textContentProperty('property name', 'property value');
+    testSuite.multilineProperty('property name', 'property value');
 
     testSuite.build(parentElement);
 

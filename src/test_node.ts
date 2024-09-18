@@ -40,7 +40,7 @@ export abstract class TestNode {
    * @param value
    * @returns this
    */
-  textContentProperty(name: string, value: string): this {
+  multilineProperty(name: string, value: string): this {
     this._properties.push({ name: name, value: value, isPropertyWithTextContent: true });
     return this;
   }

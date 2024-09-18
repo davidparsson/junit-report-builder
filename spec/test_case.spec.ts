@@ -128,7 +128,7 @@ describe('Test Case builder', () => {
   });
 
   it('should add the provided property with textContent as elements with textContent', () => {
-    testCase.textContentProperty('property name', 'property value');
+    testCase.multilineProperty('property name', 'property value');
 
     testCase.build(parentElement);
 
