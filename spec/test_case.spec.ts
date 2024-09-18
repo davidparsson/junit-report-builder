@@ -127,6 +127,20 @@ describe('Test Case builder', () => {
     });
   });
 
+  it('should add the provided property with textContent as elements with textContent', () => {
+    testCase.multilineProperty('property name', 'property value');
+
+    testCase.build(parentElement);
+
+    expect(propertiesElement.ele).toHaveBeenCalledWith(
+      'property',
+      {
+        name: 'property name',
+      },
+      'property value',
+    );
+  });
+
   it('should add a failure node when test failed', () => {
     testCase.failure();
 

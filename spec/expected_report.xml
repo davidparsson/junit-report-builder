@@ -6,6 +6,7 @@
     <testcase classname="suite1.test.Class2" name="Third test" file="./path-to/the-test-file.coffee">
       <properties>
         <property name="property name" value="property value"/>
+        <property name="property name 2">property value 2</property>
       </properties>
     </testcase>
   </testsuite>
