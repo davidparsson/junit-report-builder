@@ -69,6 +69,10 @@ Please refer to the [e2e.spec.ts](spec/e2e.spec.ts) for more details on the usag
 
 ## Changelog
 
+### 5.1.0
+
+-   Add support for multiline properties, where the value is stored as text content instead of in the `value` attribute. Thanks to [Sebastian Sauer](https://github.com/sebastian-sauer).
+
 ### 5.0.0
 
 -   A re-release of 4.0.1 since that version broke the CommonJS API.
