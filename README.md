@@ -69,6 +69,10 @@ Please refer to the [e2e.spec.ts](spec/e2e.spec.ts) for more details on the usag
 
 ## Changelog
 
+### 5.1.1
+
+-   Change `markdown-doctest` from a dependency to a dev dependency.
+
 ### 5.1.0
 
 -   Add support for multiline properties, where the value is stored as text content instead of in the `value` attribute. Thanks to [Sebastian Sauer](https://github.com/sebastian-sauer).
