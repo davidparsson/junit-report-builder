@@ -69,6 +69,10 @@ Please refer to the [e2e.spec.ts](spec/e2e.spec.ts) for more details on the usag
 
 ## Changelog
 
+### 5.1.2
+
+-   Update vulnerable dependencies.
+
 ### 5.1.1
 
 -   Change `markdown-doctest` from a dependency to a dev dependency.
