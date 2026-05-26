@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import xmlBuilder, { type XMLElement } from 'xmlbuilder';
 
 /** Helper interface to describe one property */
@@ -142,13 +141,13 @@ export abstract class TestNode {
   protected buildNode(element: XMLElement): XMLElement {
     if (this._properties.length) {
       var propertiesElement = element.ele('properties');
-      _.forEach(this._properties, (property: Property) => {
+      for (const property of this._properties) {
         if (property.isPropertyWithTextContent) {
           propertiesElement.ele('property', { name: property.name }, property.value);
         } else {
           propertiesElement.ele('property', { name: property.name, value: property.value });
         }
-      });
+      }
     }
     return element;
   }

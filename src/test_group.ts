@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import { TestNode } from './test_node';
 import type { TestCase } from './test_case';
 import type { XMLElement } from 'xmlbuilder';
@@ -25,7 +24,7 @@ export abstract class TestGroup extends TestNode {
    * @returns this
    */
   timestamp(timestamp: string | Date): this {
-    if (_.isDate(timestamp)) {
+    if (isDate(timestamp)) {
       this._attributes.timestamp = this.formatDate(timestamp);
     } else {
       this._attributes.timestamp = timestamp;
@@ -105,9 +104,20 @@ export abstract class TestGroup extends TestNode {
    */
   protected buildNode(element: XMLElement) {
     element = super.buildNode(element);
-    _.forEach(this._children, (child) => {
+    for (const child of this._children) {
       child.build(element);
-    });
+    }
     return element;
   }
+}
+
+//#region internal helper functions
+
+/**
+ * Check if a value is a Date object.
+ *
+ * @see https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_isdate
+ */
+function isDate(value: unknown): value is Date {
+  return Object.prototype.toString.call(value) === '[object Date]';
 }
